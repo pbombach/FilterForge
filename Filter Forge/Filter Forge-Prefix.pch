@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Filter Forge' target in the 'Filter Forge' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
