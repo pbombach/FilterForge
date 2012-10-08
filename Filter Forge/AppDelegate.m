@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Blue Eagle Software. All rights reserved.
 //
 
-#import "BESAppDelegate.h"
+#import "AppDelegate.h"
 
-@implementation BESAppDelegate
+@implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {

@@ -11,12 +11,17 @@
 		8A648A06160FB6C00099EBFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A648A04160FB6C00099EBFA /* InfoPlist.strings */; };
 		8A648A08160FB6C00099EBFA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A07160FB6C00099EBFA /* main.m */; };
 		8A648A0C160FB6C00099EBFA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8A648A0A160FB6C00099EBFA /* Credits.rtf */; };
-		8A648A0F160FB6C00099EBFA /* BESAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A0E160FB6C00099EBFA /* BESAppDelegate.m */; };
+		8A648A0F160FB6C00099EBFA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A0E160FB6C00099EBFA /* AppDelegate.m */; };
 		8A648A12160FB6C00099EBFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A648A10160FB6C00099EBFA /* MainMenu.xib */; };
 		8A648A1A160FB6C00099EBFA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A648A19160FB6C00099EBFA /* SenTestingKit.framework */; };
 		8A648A1B160FB6C00099EBFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6489FB160FB6C00099EBFA /* Cocoa.framework */; };
 		8A648A23160FB6C00099EBFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A648A21160FB6C00099EBFA /* InfoPlist.strings */; };
 		8A648A26160FB6C00099EBFA /* Filter_ForgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A25160FB6C00099EBFA /* Filter_ForgeTests.m */; };
+		8A648A31160FB8CC0099EBFA /* FilterChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A30160FB8CC0099EBFA /* FilterChain.m */; };
+		8A648A38160FCE7B0099EBFA /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A37160FCE7B0099EBFA /* MainController.m */; };
+		8A7DA764161C82CE005AAA4B /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DA763161C82CE005AAA4B /* MainView.m */; };
+		8AAD493616135B2300E92BDA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAD493516135B2300E92BDA /* Quartz.framework */; };
+		8AF34C30161150FF00EBB017 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF34C2F161150FF00EBB017 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +45,8 @@
 		8A648A07160FB6C00099EBFA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8A648A09160FB6C00099EBFA /* Filter Forge-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Filter Forge-Prefix.pch"; sourceTree = "<group>"; };
 		8A648A0B160FB6C00099EBFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		8A648A0D160FB6C00099EBFA /* BESAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BESAppDelegate.h; sourceTree = "<group>"; };
-		8A648A0E160FB6C00099EBFA /* BESAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BESAppDelegate.m; sourceTree = "<group>"; };
+		8A648A0D160FB6C00099EBFA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8A648A0E160FB6C00099EBFA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8A648A11160FB6C00099EBFA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8A648A18160FB6C00099EBFA /* Filter ForgeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Filter ForgeTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A648A19160FB6C00099EBFA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -49,6 +54,16 @@
 		8A648A22160FB6C00099EBFA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8A648A24160FB6C00099EBFA /* Filter_ForgeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Filter_ForgeTests.h; sourceTree = "<group>"; };
 		8A648A25160FB6C00099EBFA /* Filter_ForgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Filter_ForgeTests.m; sourceTree = "<group>"; };
+		8A648A2F160FB8CC0099EBFA /* FilterChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterChain.h; path = src/FilterChain.h; sourceTree = "<group>"; };
+		8A648A30160FB8CC0099EBFA /* FilterChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterChain.m; path = src/FilterChain.m; sourceTree = "<group>"; };
+		8A648A36160FCE7B0099EBFA /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainController.h; path = src/MainController.h; sourceTree = "<group>"; };
+		8A648A37160FCE7B0099EBFA /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainController.m; path = src/MainController.m; sourceTree = "<group>"; };
+		8A7DA762161C82CE005AAA4B /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		8A7DA763161C82CE005AAA4B /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		8A7DA76A161C8356005AAA4B /* MainViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewDataSource.h; sourceTree = "<group>"; };
+		8AAD493216135AF600E92BDA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		8AAD493516135B2300E92BDA /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		8AF34C2F161150FF00EBB017 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AAD493616135B2300E92BDA /* Quartz.framework in Frameworks */,
+				8AF34C30161150FF00EBB017 /* QuartzCore.framework in Frameworks */,
 				8A6489FC160FB6C00099EBFA /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +92,9 @@
 		8A6489EC160FB6C00099EBFA = {
 			isa = PBXGroup;
 			children = (
+				8AAD493516135B2300E92BDA /* Quartz.framework */,
+				8AAD493216135AF600E92BDA /* ImageIO.framework */,
+				8AF34C2F161150FF00EBB017 /* QuartzCore.framework */,
 				8A648A01160FB6C00099EBFA /* Filter Forge */,
 				8A648A1E160FB6C00099EBFA /* Filter ForgeTests */,
 				8A6489FA160FB6C00099EBFA /* Frameworks */,
@@ -114,10 +134,10 @@
 		8A648A01160FB6C00099EBFA /* Filter Forge */ = {
 			isa = PBXGroup;
 			children = (
-				8A648A0D160FB6C00099EBFA /* BESAppDelegate.h */,
-				8A648A0E160FB6C00099EBFA /* BESAppDelegate.m */,
-				8A648A10160FB6C00099EBFA /* MainMenu.xib */,
 				8A648A02160FB6C00099EBFA /* Supporting Files */,
+				8A648A39160FD10A0099EBFA /* Model */,
+				8AF34C2A1610A52C00EBB017 /* View */,
+				8A648A3A160FD1140099EBFA /* Controller */,
 			);
 			path = "Filter Forge";
 			sourceTree = "<group>";
@@ -151,6 +171,37 @@
 				8A648A21160FB6C00099EBFA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8A648A39160FD10A0099EBFA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8A648A2F160FB8CC0099EBFA /* FilterChain.h */,
+				8A648A30160FB8CC0099EBFA /* FilterChain.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8A648A3A160FD1140099EBFA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8A648A0D160FB6C00099EBFA /* AppDelegate.h */,
+				8A648A0E160FB6C00099EBFA /* AppDelegate.m */,
+				8A648A36160FCE7B0099EBFA /* MainController.h */,
+				8A648A37160FCE7B0099EBFA /* MainController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		8AF34C2A1610A52C00EBB017 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8A648A10160FB6C00099EBFA /* MainMenu.xib */,
+				8A7DA762161C82CE005AAA4B /* MainView.h */,
+				8A7DA763161C82CE005AAA4B /* MainView.m */,
+				8A7DA76A161C8356005AAA4B /* MainViewDataSource.h */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,7 +314,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A648A08160FB6C00099EBFA /* main.m in Sources */,
-				8A648A0F160FB6C00099EBFA /* BESAppDelegate.m in Sources */,
+				8A648A0F160FB6C00099EBFA /* AppDelegate.m in Sources */,
+				8A648A31160FB8CC0099EBFA /* FilterChain.m in Sources */,
+				8A648A38160FCE7B0099EBFA /* MainController.m in Sources */,
+				8A7DA764161C82CE005AAA4B /* MainView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +501,7 @@
 				8A648A2B160FB6C00099EBFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8A648A2C160FB6C00099EBFA /* Build configuration list for PBXNativeTarget "Filter ForgeTests" */ = {
 			isa = XCConfigurationList;
@@ -455,6 +510,7 @@
 				8A648A2E160FB6C00099EBFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
