@@ -18,7 +18,7 @@
     if (self) {
         // Initialization code here.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sizeChanged:) name:NSViewFrameDidChangeNotification object:self];
-        mCurrentZoom = 2.0;
+        mCurrentZoom = 1.0;
     }
     
     return self;
@@ -26,8 +26,25 @@
 
 
 - (void)sizeChanged:(NSNotification *)sender {
-//    [self calculateFitToWindowValues];
-//    [self scaleCurrentImage];
+    [self contentViewSize];
+    
+    [self calculateFitToWindowValues];
+    [self scaleCurrentImage];
+}
+
+
+- (void) contentViewSize {
+    CGSize size = CGSizeZero;
+    if ( mCurrentImage == nil) {
+        size = self.superview.frame.size;
+    }
+    else {
+        size.width = MAX(mCurrentZoom*mCurrentImage.extent.size.width, self.superview.frame.size.width);
+        size.height = MAX(mCurrentZoom*mCurrentImage.extent.size.height, self.superview.frame.size.height);
+    }
+    CGRect frame = self.frame;
+    frame.size = size;
+    [self setFrame:frame];
 }
 
 - (CIImage *)inputImage {
@@ -40,11 +57,12 @@
 
 - (void) calculateFitToWindowValues {
     CIImage *inputImage = [self inputImage];
+    CGFloat wr = self.superview.frame.size.width/inputImage.extent.size.width;
+    CGFloat hr =self.superview.frame.size.height/inputImage.extent.size.height;
+//    NSLog(@"%f %f",wr,hr);
+    fitToWindowZoom = MIN(wr,hr);
     
-    fitToWindowZoom = MIN(self.frame.size.width/inputImage.extent.size.width, self.frame.size.height/inputImage.extent.size.height);
-
-    fitToWindowOffset.x = -(fitToWindowZoom*inputImage.extent.size.width - self.frame.size.width)/2.0;
-    fitToWindowOffset.y = -(fitToWindowZoom*inputImage.extent.size.height - self.frame.size.height)/2.0;
+//    fitToWindowZoom = MIN(self.frame.size.width/inputImage.extent.size.width, self.frame.size.height/inputImage.extent.size.height);
 
 }
 
@@ -66,13 +84,6 @@
     
     
     mCurrentImage = [filter valueForKey:kCIOutputImageKey];
-    
-    // Offsets
-    mCurrentOffset.x = (fitToWindowZoom*inputImage.extent.size.width - self.frame.size.width);
-    mCurrentOffset.y = (fitToWindowZoom*inputImage.extent.size.height - self.frame.size.height);
-    mCurrentOffset.x = 0.0;
-//    mCurrentOffset.y = 0.0;
-
 
     
 }
@@ -90,11 +101,11 @@
     // Scale current window
     [self scaleCurrentImage];
     
-    CGRect frame = self.frame;
-    frame.size = mCurrentImage.extent.size;
-    frame.origin = fitToWindowOffset;
-    CGRect parentFrame = [self superview].frame;
-    [self setFrame:frame];
+//    CGRect frame = self.frame;
+//    frame.size = mCurrentImage.extent.size;
+//    frame.origin = fitToWindowOffset;
+//    CGRect parentFrame = [self superview].frame;
+//    [self setFrame:frame];
     
     // Redisplay
     [self setNeedsDisplay:YES];
@@ -114,13 +125,19 @@
         }
        
 
-//        CGRect destRect = dirtyRect;
-//        CGRect src = dirtyRect;
-//        src.origin.x += mCurrentOffset.x;
-//        src.origin.y += mCurrentOffset.y;
-//        destRect.origin.x -= fitToWindowOffset.x;
-//        destRect.origin.y -= fitToWindowOffset.y;
-        [mContext drawImage:mCurrentImage inRect:dirtyRect fromRect:dirtyRect];
+        CGRect dst = dirtyRect;
+        CGRect src = dirtyRect;
+        CGPoint offset = CGPointZero;
+        offset.x = MAX(0,(self.frame.size.width - mCurrentImage.extent.size.width)/2.0);
+        offset.y = MAX(0,(self.frame.size.height - mCurrentImage.extent.size.height)/2.0);
+        dst.origin.x += offset.x;
+        dst.origin.y += offset.y;
+//        NSLog(@"Offset: %@",NSStringFromPoint((NSPoint) offset));
+//        NSLog(@"Frame: %@",NSStringFromRect((NSRect) self.frame));
+//        NSLog(@"Image: %@",NSStringFromRect((NSRect) mCurrentImage.extent));
+        
+
+        [mContext drawImage:mCurrentImage inRect:dst fromRect:src];
     }
     else {
         
