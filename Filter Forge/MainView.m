@@ -17,7 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sizeChanged:) name:NSViewFrameDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sizeChanged:) name:NSViewFrameDidChangeNotification object:self.superview];
         mCurrentZoom = 1.0;
     }
     
@@ -26,21 +26,61 @@
 
 
 - (void)sizeChanged:(NSNotification *)sender {
+
     [self contentViewSize];
     
+    CGFloat effectiveZoom = mCurrentZoom*fitToWindowZoom;
+    
     [self calculateFitToWindowValues];
+    mCurrentZoom = MAX(1,effectiveZoom/fitToWindowZoom);
+
     [self scaleCurrentImage];
+    
+    [self setNeedsDisplay:YES];
+}
+
+- (void) magnifyWithEvent:(NSEvent *)event {
+
+    mCurrentZoom *= 1+event.magnification;
+    mCurrentZoom = MAX(1,MIN(200, mCurrentZoom));
+
+
+    [self contentViewSize];
+
+    
+    NSLog(@"Magnify: %f",mCurrentZoom);
+    [self scaleCurrentImage];
+    
+    // Only change offset if image exceeds window size
+    NSPoint currentScrollPoint = self.visibleRect.origin;
+    CGFloat m = 1 + [event magnification];
+
+    NSPoint newScrollPoint = currentScrollPoint;
+
+    if (mCurrentImage.extent.size.height > self.superview.frame.size.height) {
+        newScrollPoint.y = (m-1)*event.locationInWindow.y +m*currentScrollPoint.y;
+    }
+    
+    if (mCurrentImage.extent.size.width > self.superview.frame.size.width) {
+        newScrollPoint.x = (m-1)*event.locationInWindow.x +m*currentScrollPoint.x;
+    }
+    
+    [self scrollPoint:newScrollPoint];
+    [self setNeedsDisplay:YES];
+    
 }
 
 
 - (void) contentViewSize {
     CGSize size = CGSizeZero;
-    if ( mCurrentImage == nil) {
+    CIImage *inputImage = [self inputImage];
+    
+    if ( inputImage == nil) {
         size = self.superview.frame.size;
     }
     else {
-        size.width = MAX(mCurrentZoom*mCurrentImage.extent.size.width, self.superview.frame.size.width);
-        size.height = MAX(mCurrentZoom*mCurrentImage.extent.size.height, self.superview.frame.size.height);
+        size.width = MAX(mCurrentZoom*fitToWindowZoom*inputImage.extent.size.width, self.superview.frame.size.width);
+        size.height = MAX(mCurrentZoom*fitToWindowZoom*inputImage.extent.size.height, self.superview.frame.size.height);
     }
     CGRect frame = self.frame;
     frame.size = size;
@@ -59,10 +99,8 @@
     CIImage *inputImage = [self inputImage];
     CGFloat wr = self.superview.frame.size.width/inputImage.extent.size.width;
     CGFloat hr =self.superview.frame.size.height/inputImage.extent.size.height;
-//    NSLog(@"%f %f",wr,hr);
     fitToWindowZoom = MIN(wr,hr);
-    
-//    fitToWindowZoom = MIN(self.frame.size.width/inputImage.extent.size.width, self.frame.size.height/inputImage.extent.size.height);
+
 
 }
 
@@ -73,7 +111,7 @@
 - (void) scaleCurrentImage {
     
     NSAffineTransform *scale = [NSAffineTransform transform];
-    [scale scaleBy:fitToWindowZoom];
+    [scale scaleBy:fitToWindowZoom*mCurrentZoom];
     
     CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
     
@@ -88,6 +126,15 @@
     
 }
 
+- (void) scrollToCenter {
+    
+    CGPoint offset = CGPointZero;
+    offset.x = MAX(0,-(self.superview.frame.size.width - mCurrentImage.extent.size.width)/2.0);
+    offset.y = MAX(0,-(self.superview.frame.size.height - mCurrentImage.extent.size.height)/2.0);
+    
+    [self scrollPoint:offset];
+
+}
 - (void) setImages:(NSDictionary *)images {
     
     // Save new image
@@ -98,15 +145,17 @@
     // Calculate the fit to zoom
     [self calculateFitToWindowValues];
     
+    // Reset the zoom
+    mCurrentZoom = 1.0;
+    
+    // Calculate size based on magnifcation level
+    [self contentViewSize];
+    
     // Scale current window
     [self scaleCurrentImage];
     
-//    CGRect frame = self.frame;
-//    frame.size = mCurrentImage.extent.size;
-//    frame.origin = fitToWindowOffset;
-//    CGRect parentFrame = [self superview].frame;
-//    [self setFrame:frame];
-    
+    [self scrollToCenter];
+
     // Redisplay
     [self setNeedsDisplay:YES];
 }
@@ -128,8 +177,9 @@
         CGRect dst = dirtyRect;
         CGRect src = dirtyRect;
         CGPoint offset = CGPointZero;
-        offset.x = MAX(0,(self.frame.size.width - mCurrentImage.extent.size.width)/2.0);
-        offset.y = MAX(0,(self.frame.size.height - mCurrentImage.extent.size.height)/2.0);
+        offset.x = (self.frame.size.width - mCurrentImage.extent.size.width)/2.0;
+        offset.y = (self.frame.size.height - mCurrentImage.extent.size.height)/2.0;
+       
         dst.origin.x += offset.x;
         dst.origin.y += offset.y;
 //        NSLog(@"Offset: %@",NSStringFromPoint((NSPoint) offset));

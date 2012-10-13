@@ -27,6 +27,7 @@
 - (CIImage *) inputImage;
 - (void) setImages:(NSDictionary *) images;
 - (NSDictionary *) images;
+- (void) scrollToCenter;
 
 @property (weak) id <MainViewDataSource> dataSource;
 
