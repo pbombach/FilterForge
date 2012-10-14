@@ -27,8 +27,12 @@
 - (CIImage *) inputImage;
 - (void) setImages:(NSDictionary *) images;
 - (NSDictionary *) images;
-- (void) scrollToCenter;
-- (void) setZoom:(CGFloat) zoom withPoint:(CGPoint) point;
+//- (void) scrollToCenter;
+//- (void) scaleZoom:(CGFloat) zoom atPoint:(CGPoint) point;
+
+- (void) resetZoom;
+- (void) zoomIn;
+- (void) zoomOut;
 
 @property (weak) id <MainViewDataSource> dataSource;
 

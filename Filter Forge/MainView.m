@@ -10,6 +10,14 @@
 #import "MainView.h"
 #import "MainViewDataSource.h"
 
+typedef enum {
+    ZoomDirectionIn = 0,
+    ZoomDirectionOut = 1,
+} ZoomDirection;
+
+static CGFloat defaultZoomInMagnification = .41421356237309; // magnification = 1+m => 1 - sqrt(2)
+static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2)
+
 @implementation MainView
 
 - (id)initWithFrame:(NSRect)frame
@@ -39,7 +47,7 @@
     [self setNeedsDisplay:YES];
 }
 
-- (void) setZoom:(CGFloat)m atPoint:(CGPoint) point {
+- (void) scaleZoom:(CGFloat)m atPoint:(CGPoint) point {
     
     //mCurrentZoom = zoom;
     
@@ -83,6 +91,43 @@
     
 }
 
+- (void) resetZoom {
+    mCurrentZoom = 1.0;
+    [self scrollPoint:CGPointZero];
+    [self contentViewSize];
+    [self scaleCurrentImage];
+}
+
+- (void) zoomIn {
+    [self zoomInOrOut:ZoomDirectionIn];
+}
+
+- (void) zoomOut {
+    [self zoomInOrOut:ZoomDirectionOut];
+}
+
+- (void) zoomInOrOut:(ZoomDirection) zoomDirection {
+    
+    // Calculate view midpoint
+    CGPoint midPoint;
+    midPoint.x = self.frame.size.width/2.0;
+    midPoint.y = self.frame.size.height/2.0;
+    CGFloat magnification;
+    switch (zoomDirection) {
+        case ZoomDirectionIn:
+            magnification = defaultZoomInMagnification;
+            break;
+        case ZoomDirectionOut:
+            magnification = defaultZoomOutMagnification;
+            break;
+        default:
+            magnification = 1.0; // No zoom
+            break;
+    }
+    [self scaleZoom:magnification atPoint:midPoint];
+
+}
+
 - (void) magnifyWithEvent:(NSEvent *)event {
     
 //    CGFloat zoom = mCurrentZoom*([event magnification]+1);
@@ -102,7 +147,7 @@
 //    }
 
 //    zoom = MAX(1,MIN(200,zoom));
-    [self setZoom:m atPoint:event.locationInWindow];
+    [self scaleZoom:m atPoint:event.locationInWindow];
 //    [self setZoom:m atPoint:CGPointZero];
     
 //    [self scrollPoint:newScrollPoint];

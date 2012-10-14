@@ -49,7 +49,7 @@
 }
 
 - (IBAction)edgeButtonClicked:(id)sender {
-    [self.experimentalImageView setZoom:1.0 withPoint:CGPointZero];
+ 
 }
 
 - (IBAction)outputButtonClicked:(id)sender {
@@ -74,11 +74,13 @@
     long clickedSegment = [sender selectedSegment];
     switch (clickedSegment) {
         case ZOOM_IN:
+            [self.experimentalImageView zoomIn];
             break;
         case ZOOM_OUT:
+            [self.experimentalImageView zoomOut];
             break;
         case ZOOM_FIT:
-            [self.experimentalImageView setZoom:1.0 withPoint:CGPointZero];
+            [self.experimentalImageView resetZoom];
             break;
         default:
             break;
