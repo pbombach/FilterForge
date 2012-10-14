@@ -20,6 +20,7 @@
 		8A648A31160FB8CC0099EBFA /* FilterChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A30160FB8CC0099EBFA /* FilterChain.m */; };
 		8A648A38160FCE7B0099EBFA /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A37160FCE7B0099EBFA /* MainController.m */; };
 		8A7DA764161C82CE005AAA4B /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DA763161C82CE005AAA4B /* MainView.m */; };
+		8A9B737B162A28F600603927 /* lock_24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A9B737A162A28F600603927 /* lock_24x24.png */; };
 		8AAD493616135B2300E92BDA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAD493516135B2300E92BDA /* Quartz.framework */; };
 		8AF34C30161150FF00EBB017 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF34C2F161150FF00EBB017 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		8A7DA762161C82CE005AAA4B /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		8A7DA763161C82CE005AAA4B /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 		8A7DA76A161C8356005AAA4B /* MainViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewDataSource.h; sourceTree = "<group>"; };
+		8A9B737A162A28F600603927 /* lock_24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_24x24.png; sourceTree = "<group>"; };
 		8AAD493216135AF600E92BDA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8AAD493516135B2300E92BDA /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		8AF34C2F161150FF00EBB017 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -134,6 +136,7 @@
 		8A648A01160FB6C00099EBFA /* Filter Forge */ = {
 			isa = PBXGroup;
 			children = (
+				8A9B737C162A290100603927 /* artwork */,
 				8A648A02160FB6C00099EBFA /* Supporting Files */,
 				8A648A39160FD10A0099EBFA /* Model */,
 				8AF34C2A1610A52C00EBB017 /* View */,
@@ -191,6 +194,14 @@
 				8A648A37160FCE7B0099EBFA /* MainController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		8A9B737C162A290100603927 /* artwork */ = {
+			isa = PBXGroup;
+			children = (
+				8A9B737A162A28F600603927 /* lock_24x24.png */,
+			);
+			name = artwork;
 			sourceTree = "<group>";
 		};
 		8AF34C2A1610A52C00EBB017 /* View */ = {
@@ -279,6 +290,7 @@
 				8A648A06160FB6C00099EBFA /* InfoPlist.strings in Resources */,
 				8A648A0C160FB6C00099EBFA /* Credits.rtf in Resources */,
 				8A648A12160FB6C00099EBFA /* MainMenu.xib in Resources */,
+				8A9B737B162A28F600603927 /* lock_24x24.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

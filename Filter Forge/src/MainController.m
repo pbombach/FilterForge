@@ -49,6 +49,7 @@
 }
 
 - (IBAction)edgeButtonClicked:(id)sender {
+    [self.experimentalImageView setZoom:1.0 withPoint:CGPointZero];
 }
 
 - (IBAction)outputButtonClicked:(id)sender {
@@ -68,4 +69,20 @@
 - (void) awakeFromNib {
     self->_experimentalImageView.dataSource = chain;
 }
+
+- (IBAction)zoomButtonClicked:(id)sender {
+    long clickedSegment = [sender selectedSegment];
+    switch (clickedSegment) {
+        case ZOOM_IN:
+            break;
+        case ZOOM_OUT:
+            break;
+        case ZOOM_FIT:
+            [self.experimentalImageView setZoom:1.0 withPoint:CGPointZero];
+            break;
+        default:
+            break;
+    }
+}
+
 @end

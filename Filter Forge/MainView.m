@@ -39,34 +39,100 @@
     [self setNeedsDisplay:YES];
 }
 
-- (void) magnifyWithEvent:(NSEvent *)event {
+- (void) setZoom:(CGFloat)m atPoint:(CGPoint) point {
+    
+    //mCurrentZoom = zoom;
+    
 
-    mCurrentZoom *= 1+event.magnification;
+    
+    mCurrentZoom *= 1+m;
     mCurrentZoom = MAX(1,MIN(200, mCurrentZoom));
 
+    
+   // NSLog(@"Magnify: %f",mCurrentZoom);
+    
 
+
+    NSPoint currentScrollPoint = self.visibleRect.origin;
+    NSPoint newScrollPoint = currentScrollPoint;
+    
     [self contentViewSize];
+    
+    [self scaleCurrentImage];
 
     
-    NSLog(@"Magnify: %f",mCurrentZoom);
-    [self scaleCurrentImage];
+    if ( !CGPointEqualToPoint(point, CGPointZero)) {
+        m = m+1;
+
+        if (mCurrentImage.extent.size.height > self.superview.frame.size.height) {
+            newScrollPoint.y = (m-1)*point.y + m*currentScrollPoint.y;
+        }
+        
+        if (mCurrentImage.extent.size.width > self.superview.frame.size.width) {
+            newScrollPoint.x = (m-1)*point.x + m*currentScrollPoint.x;
+        }
+
+        NSLog(@"Point: %f %f",newScrollPoint.x,newScrollPoint.y);
+
+    }
+    [self scrollPoint:newScrollPoint];
+   
+    
+//    [self setNeedsDisplay:YES];
+
+    
+}
+
+- (void) magnifyWithEvent:(NSEvent *)event {
+    
+//    CGFloat zoom = mCurrentZoom*([event magnification]+1);
+    CGFloat m = [event magnification];
+//
     
     // Only change offset if image exceeds window size
-    NSPoint currentScrollPoint = self.visibleRect.origin;
-    CGFloat m = 1 + [event magnification];
-
-    NSPoint newScrollPoint = currentScrollPoint;
-
-    if (mCurrentImage.extent.size.height > self.superview.frame.size.height) {
-        newScrollPoint.y = (m-1)*event.locationInWindow.y +m*currentScrollPoint.y;
-    }
     
-    if (mCurrentImage.extent.size.width > self.superview.frame.size.width) {
-        newScrollPoint.x = (m-1)*event.locationInWindow.x +m*currentScrollPoint.x;
-    }
+
     
-    [self scrollPoint:newScrollPoint];
-    [self setNeedsDisplay:YES];
+//    if (mCurrentImage.extent.size.height > self.superview.frame.size.height) {
+//        newScrollPoint.y = (m-1)*event.locationInWindow.y +m*currentScrollPoint.y;
+//    }
+//    
+//    if (mCurrentImage.extent.size.width > self.superview.frame.size.width) {
+//        newScrollPoint.x = (m-1)*event.locationInWindow.x +m*currentScrollPoint.x;
+//    }
+
+//    zoom = MAX(1,MIN(200,zoom));
+    [self setZoom:m atPoint:event.locationInWindow];
+//    [self setZoom:m atPoint:CGPointZero];
+    
+//    [self scrollPoint:newScrollPoint];
+
+//    mCurrentZoom *= 1+event.magnification;
+//    mCurrentZoom = MAX(1,MIN(200, mCurrentZoom));
+//
+//
+//    [self contentViewSize];
+//
+//    
+//    NSLog(@"Magnify: %f",mCurrentZoom);
+//    [self scaleCurrentImage];
+//    
+//    // Only change offset if image exceeds window size
+//    NSPoint currentScrollPoint = self.visibleRect.origin;
+//    CGFloat m = 1 + [event magnification];
+//
+//    NSPoint newScrollPoint = currentScrollPoint;
+//
+//    if (mCurrentImage.extent.size.height > self.superview.frame.size.height) {
+//        newScrollPoint.y = (m-1)*event.locationInWindow.y +m*currentScrollPoint.y;
+//    }
+//    
+//    if (mCurrentImage.extent.size.width > self.superview.frame.size.width) {
+//        newScrollPoint.x = (m-1)*event.locationInWindow.x +m*currentScrollPoint.x;
+//    }
+//    
+//    [self scrollPoint:newScrollPoint];
+//    [self setNeedsDisplay:YES];
     
 }
 
