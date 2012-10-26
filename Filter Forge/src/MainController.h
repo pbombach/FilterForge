@@ -43,11 +43,9 @@ typedef enum {
 
 @property (weak) IBOutlet MainView *experimentalImageView;
 @property (weak) IBOutlet NSSegmentedControl *zoomButtons;
-@property (assign) int mDisplayedImage;
+
 
 #pragma mark - Properties
-@property (weak) IBOutlet NSScrollView *scrollView;
-@property (weak) IBOutlet NSView *contentView;
 @property (weak) IBOutlet NSSegmentedControl *imageSelectionButtons;
 
 #pragma mark - Core Logic

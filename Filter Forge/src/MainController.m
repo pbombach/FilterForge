@@ -12,8 +12,17 @@
 #import "MainView.h"
 
 
+//static NSString * const kDisplayInputImage = @"DisplayInputImage";
+//static NSString * const kDisplayOutputImage = @"DisplayOutputImage";
+
+static int const kDisplayInputImage           = 0;
+static int const kDisplayOutputImage          = 1;
+static int const kDisplayInputPlusOutputImage = 2;
+
+
 @interface MainController ()
 
+@property (assign) int mDisplayedImage;
 
 @end
 
@@ -113,9 +122,21 @@
 
 - (IBAction)imageSelectionButtonClicked:(id)sender {
     
-    long clickedSegment = [sender selectedSegment];
-    self.mDisplayedImage = clickedSegment;
-    [self.experimentalImageView displayImage:clickedSegment];
+    NSInteger clickedSegmentTag = [sender selectedTag];
+    switch (clickedSegmentTag) {
+            // TODO: No magic numbers
+        case kDisplayInputImage:
+            [self.experimentalImageView displayInputImage];
+            break;
+        case kDisplayOutputImage:
+            [self.experimentalImageView displayOutputImage];
+            break;
+        case kDisplayInputPlusOutputImage:
+            [self.experimentalImageView displayInputPlusOutputImage];
+            break;
+        default:
+            break;
+    }
     [self.experimentalImageView needsDisplay];
 }
 

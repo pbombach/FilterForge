@@ -9,27 +9,25 @@
 #import <Cocoa/Cocoa.h>
 #import "MainViewDataSource.h"
 
-
 typedef enum _MainViewDisplayedImage {
     MainViewInputImage              = 0,
     MainViewOutputImage             = 1,
     MainViewInputPlusOutputImage    = 2
 } MainViewDisplayedImage;
 
-
 @interface MainView : NSView
 {
 }
 
-//- (void) modelChanged;
-
-//- (CIImage *) inputImage;
-- (void) setImages:(NSDictionary *) images;
-//- (NSDictionary *) images;
+@property (strong, nonatomic) NSDictionary *images;
 
 - (void) resetZoom;
 - (void) zoomIn;
 - (void) zoomOut;
-- (void) displayImage:(MainViewDisplayedImage) image;
+
+
+- (void) displayInputImage;
+- (void) displayOutputImage;
+- (void) displayInputPlusOutputImage;
 
 @end
