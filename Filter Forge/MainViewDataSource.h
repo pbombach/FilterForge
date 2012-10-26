@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 static NSString * const kInputImage = @"inputImage";
+static NSString * const kOutputImage = @"outputImage";
 
 @protocol MainViewDataSource <NSObject>
 

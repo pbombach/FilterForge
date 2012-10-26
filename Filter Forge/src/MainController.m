@@ -11,7 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MainView.h"
 
+
 @interface MainController ()
+
 
 @end
 
@@ -20,17 +22,44 @@
 - (id) init {
     self = [super init];
     if (self) {
-        // stuff
-        
         // Create an instance of the chain model
         chain = [[FilterChain alloc]init];
         
         // Register for notifications from the chain model
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChanged:) name:BESCHAIN_MODEL_CHANGED object:nil];
+        self.mDisplayedImage = MainViewInputImage;
     }
     return self;
 }
 
+- (void) updateUI {
+    
+    // Update the displayed image selector
+    int imageSelectionButton;
+    MainViewDisplayedImage displayedImage;
+    switch (self.mDisplayedImage) {
+        case MainViewInputImage:
+            imageSelectionButton = 0;
+            displayedImage = MainViewInputImage;
+            break;
+        case MainViewOutputImage:
+            imageSelectionButton = 1;
+            displayedImage = MainViewOutputImage;
+            break;
+        case MainViewInputPlusOutputImage:
+            displayedImage = MainViewInputPlusOutputImage;
+            imageSelectionButton = 2;
+            break;
+        default:
+            break;
+    }
+    [self.imageSelectionButtons setSelectedSegment:imageSelectionButton];
+    
+    // Tell the MainView to load the image
+
+    
+
+}
 #pragma mark - Actions
 
 - (IBAction)inputButtonClicked:(id)sender {
@@ -38,14 +67,10 @@
     // Prompt the user for a file dialog
     NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
     [openPanel runModal];
-    NSLog(@"Files: %@",openPanel.URL);
     
     // Set the file in the chain
     [chain setFileURL:openPanel.URL];
 
-//    CIContext *context = [CIContext contextWithOptions:nil];
-    
-    //CGContextRef context =
 }
 
 - (IBAction)edgeButtonClicked:(id)sender {
@@ -58,7 +83,6 @@
 #pragma mark - Core Logic
 
 - (void)modelChanged:(NSNotification *)sender {
-    NSLog(@"Model changed");
     self.experimentalImageView.images = chain.largeImages;
 }
 
@@ -67,7 +91,7 @@
 #pragma mark - NIB Stuff
 
 - (void) awakeFromNib {
-    self->_experimentalImageView.dataSource = chain;
+    [self updateUI];
 }
 
 - (IBAction)zoomButtonClicked:(id)sender {
@@ -85,6 +109,14 @@
         default:
             break;
     }
+}
+
+- (IBAction)imageSelectionButtonClicked:(id)sender {
+    
+    long clickedSegment = [sender selectedSegment];
+    self.mDisplayedImage = clickedSegment;
+    [self.experimentalImageView displayImage:clickedSegment];
+    [self.experimentalImageView needsDisplay];
 }
 
 @end

@@ -1300,7 +1300,7 @@
 			<object class="NSWindowTemplate" id="972006081">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{335, 390}, {1274, 782}}</string>
+				<string key="NSWindowRect">{{0, 678}, {1152, 678}}</string>
 				<int key="NSWTFlags">1954021376</int>
 				<string key="NSWindowTitle">Filter Forge</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -1317,7 +1317,7 @@
 								<object class="NSSegmentedControl" id="363298631">
 									<reference key="NSNextResponder" ref="48262405"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{18, 739}, {192, 24}}</string>
+									<string key="NSFrame">{{18, 635}, {192, 24}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="277418861"/>
@@ -1325,7 +1325,7 @@
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSegmentedCell" key="NSCell" id="995014960">
 										<int key="NSCellFlags">67108864</int>
-										<int key="NSCellFlags2">0</int>
+										<int key="NSCellFlags2">33554432</int>
 										<object class="NSFont" key="NSSupport" id="644391043">
 											<string key="NSName">LucidaGrande</string>
 											<double key="NSSize">13</double>
@@ -1360,7 +1360,7 @@
 								<object class="NSSegmentedControl" id="277418861">
 									<reference key="NSNextResponder" ref="48262405"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{977, 739}, {279, 24}}</string>
+									<string key="NSFrame">{{855, 635}, {279, 24}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="351323823"/>
@@ -1408,7 +1408,7 @@
 													<reference key="NSNextResponder" ref="730193462"/>
 													<int key="NSvFlags">268</int>
 													<array class="NSMutableArray" key="NSSubviews"/>
-													<string key="NSFrame">{{0, -30}, {1234, 667}}</string>
+													<string key="NSFrame">{{0, -134}, {1234, 667}}</string>
 													<reference key="NSSuperview" ref="730193462"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="435435050"/>
@@ -1416,7 +1416,7 @@
 													<string key="NSClassName">MainView</string>
 												</object>
 											</array>
-											<string key="NSFrame">{{1, 1}, {1232, 637}}</string>
+											<string key="NSFrame">{{1, 1}, {1110, 533}}</string>
 											<reference key="NSSuperview" ref="351323823"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="572532762"/>
@@ -1436,7 +1436,7 @@
 										<object class="NSScroller" id="625254385">
 											<reference key="NSNextResponder" ref="351323823"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{1217, 1}, {16, 637}}</string>
+											<string key="NSFrame">{{1095, 1}, {16, 533}}</string>
 											<reference key="NSSuperview" ref="351323823"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="466546262"/>
@@ -1445,12 +1445,12 @@
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<reference key="NSTarget" ref="351323823"/>
 											<string key="NSAction">_doScroller:</string>
-											<double key="NSPercent">0.95502248875562223</double>
+											<double key="NSPercent">0.79910044977511241</double>
 										</object>
 										<object class="NSScroller" id="435435050">
 											<reference key="NSNextResponder" ref="351323823"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{1, 622}, {1232, 16}}</string>
+											<string key="NSFrame">{{1, 518}, {1110, 16}}</string>
 											<reference key="NSSuperview" ref="351323823"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="625254385"/>
@@ -1460,10 +1460,10 @@
 											<int key="NSsFlags">1</int>
 											<reference key="NSTarget" ref="351323823"/>
 											<string key="NSAction">_doScroller:</string>
-											<double key="NSPercent">0.99837925445705022</double>
+											<double key="NSPercent">0.89951377633711505</double>
 										</object>
 									</array>
-									<string key="NSFrame">{{20, 94}, {1234, 639}}</string>
+									<string key="NSFrame">{{20, 94}, {1112, 535}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="730193462"/>
@@ -1479,7 +1479,7 @@
 								<object class="NSButton" id="1034565995">
 									<reference key="NSNextResponder" ref="48262405"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{1199, 20}, {55, 48}}</string>
+									<string key="NSFrame">{{1077, 20}, {55, 48}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView"/>
@@ -1504,7 +1504,7 @@
 								<object class="NSButton" id="1063898245">
 									<reference key="NSNextResponder" ref="48262405"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{613, 20}, {48, 48}}</string>
+									<string key="NSFrame">{{552, 20}, {48, 48}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1034565995"/>
@@ -1552,7 +1552,7 @@
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
 							</array>
-							<string key="NSFrameSize">{1274, 782}</string>
+							<string key="NSFrameSize">{1152, 678}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="363298631"/>
@@ -1560,12 +1560,12 @@
 							<string key="NSClassName">NSView</string>
 						</object>
 					</array>
-					<string key="NSFrameSize">{1274, 782}</string>
+					<string key="NSFrameSize">{1152, 678}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="48262405"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -2322,6 +2322,22 @@
 						<reference key="destination" ref="363298631"/>
 					</object>
 					<int key="connectionID">852</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">imageSelectionButtonClicked:</string>
+						<reference key="source" ref="744111195"/>
+						<reference key="destination" ref="277418861"/>
+					</object>
+					<int key="connectionID">857</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">imageSelectionButtons</string>
+						<reference key="source" ref="744111195"/>
+						<reference key="destination" ref="277418861"/>
+					</object>
+					<int key="connectionID">858</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3838,16 +3854,6 @@
 						<reference key="parent" ref="351323823"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">818</int>
-						<reference key="object" ref="626842051"/>
-						<reference key="parent" ref="48262405"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">819</int>
-						<reference key="object" ref="509653181"/>
-						<reference key="parent" ref="48262405"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">828</int>
 						<reference key="object" ref="277418861"/>
 						<array class="NSMutableArray" key="children">
@@ -3863,21 +3869,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">835</int>
 						<reference key="object" ref="182406434"/>
-						<reference key="parent" ref="48262405"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">839</int>
-						<reference key="object" ref="282613628"/>
-						<reference key="parent" ref="48262405"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">841</int>
-						<reference key="object" ref="431343349"/>
-						<reference key="parent" ref="48262405"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">842</int>
-						<reference key="object" ref="919203626"/>
 						<reference key="parent" ref="48262405"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3906,6 +3897,31 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">849</int>
 						<reference key="object" ref="404227883"/>
+						<reference key="parent" ref="48262405"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">842</int>
+						<reference key="object" ref="919203626"/>
+						<reference key="parent" ref="48262405"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">818</int>
+						<reference key="object" ref="626842051"/>
+						<reference key="parent" ref="48262405"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">839</int>
+						<reference key="object" ref="282613628"/>
+						<reference key="parent" ref="48262405"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">819</int>
+						<reference key="object" ref="509653181"/>
+						<reference key="parent" ref="48262405"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">841</int>
+						<reference key="object" ref="431343349"/>
 						<reference key="parent" ref="48262405"/>
 					</object>
 				</array>
@@ -4158,7 +4174,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">852</int>
+			<int key="maxID">863</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4186,6 +4202,7 @@
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="edgeButtonClicked:">id</string>
+						<string key="imageSelectionButtonClicked:">id</string>
 						<string key="inputButtonClicked:">id</string>
 						<string key="outputButtonClicked:">id</string>
 						<string key="zoomButtonClicked:">id</string>
@@ -4193,6 +4210,10 @@
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="edgeButtonClicked:">
 							<string key="name">edgeButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="imageSelectionButtonClicked:">
+							<string key="name">imageSelectionButtonClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="inputButtonClicked:">
@@ -4211,6 +4232,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="contentView">NSView</string>
 						<string key="experimentalImageView">MainView</string>
+						<string key="imageSelectionButtons">NSSegmentedControl</string>
 						<string key="scrollView">NSScrollView</string>
 						<string key="zoomButtons">NSSegmentedControl</string>
 					</dictionary>
@@ -4222,6 +4244,10 @@
 						<object class="IBToOneOutletInfo" key="experimentalImageView">
 							<string key="name">experimentalImageView</string>
 							<string key="candidateClassName">MainView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageSelectionButtons">
+							<string key="name">imageSelectionButtons</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="scrollView">
 							<string key="name">scrollView</string>

@@ -10,30 +10,26 @@
 #import "MainViewDataSource.h"
 
 
+typedef enum _MainViewDisplayedImage {
+    MainViewInputImage              = 0,
+    MainViewOutputImage             = 1,
+    MainViewInputPlusOutputImage    = 2
+} MainViewDisplayedImage;
+
 
 @interface MainView : NSView
 {
-    CGFloat fitToWindowZoom;
-    CGPoint fitToWindowOffset;
-    NSDictionary *mImages;
-    CIContext *mContext;
-    CIImage *mCurrentImage;
-    CGFloat mCurrentZoom;
-    CGPoint mCurrentOffset;
 }
 
 //- (void) modelChanged;
 
-- (CIImage *) inputImage;
+//- (CIImage *) inputImage;
 - (void) setImages:(NSDictionary *) images;
-- (NSDictionary *) images;
-//- (void) scrollToCenter;
-//- (void) scaleZoom:(CGFloat) zoom atPoint:(CGPoint) point;
+//- (NSDictionary *) images;
 
 - (void) resetZoom;
 - (void) zoomIn;
 - (void) zoomOut;
-
-@property (weak) id <MainViewDataSource> dataSource;
+- (void) displayImage:(MainViewDisplayedImage) image;
 
 @end

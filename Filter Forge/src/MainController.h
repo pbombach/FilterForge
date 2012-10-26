@@ -15,8 +15,8 @@
 @class MainView;
 
 typedef enum {
-    ZOOM_IN = 0,
-    ZOOM_OUT = 1,
+    ZOOM_OUT = 0,
+    ZOOM_IN = 1,
     ZOOM_FIT = 2
 } ZOOM_CONTROLS;
 
@@ -34,18 +34,21 @@ typedef enum {
 
 // Actions
 - (IBAction)zoomButtonClicked:(id)sender;
+- (IBAction)imageSelectionButtonClicked:(id)sender;
+
 #pragma mark - Actions
 - (IBAction)inputButtonClicked:(id)sender;
 - (IBAction)edgeButtonClicked:(id)sender;
 - (IBAction)outputButtonClicked:(id)sender;
+
 @property (weak) IBOutlet MainView *experimentalImageView;
 @property (weak) IBOutlet NSSegmentedControl *zoomButtons;
-
+@property (assign) int mDisplayedImage;
 
 #pragma mark - Properties
 @property (weak) IBOutlet NSScrollView *scrollView;
 @property (weak) IBOutlet NSView *contentView;
-
+@property (weak) IBOutlet NSSegmentedControl *imageSelectionButtons;
 
 #pragma mark - Core Logic
 - (void) modelChanged:(NSNotification *) sender;

@@ -1,0 +1,10 @@
+* Program to allow for simple diagnosis of a filter. Focused at first on filters that produce masks
+* Initial release (10/25) will include just built in filters
+* Subsequent release will include a simple land masking filter
+* Initial feature set
+  * Easily switch display amoung input, output and composited images
+  * Composited image will consist of input image with the output image composited at a user selected alpha level
+  * Current cursor position will display input image value, output image value, coordinate location
+  * A sustained mouse click will switch displayed images until the mouse click is released
+  * After a certain zoom level, a grid will be drawn indicating individual pixels
+  * Mouse position will be moveable via arrow keys

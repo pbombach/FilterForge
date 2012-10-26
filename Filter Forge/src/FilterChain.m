@@ -10,9 +10,31 @@
 #import <Quartz/Quartz.h>
 #import "FilterChain.h"
 
-@implementation FilterChain
+/*
+ #pragma mark - Synthesized Properties
+ #pragma mark - Initializers and Dealloc
+ #pragma mark - Properties
+ #pragma mark - Protocols
+ #pragma mark - Overridden Methods
+ #pragma mark - Instance Methods
+ 
+ */
 
 NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
+
+@implementation FilterChain
+
+
+- (id) init {
+    self = [super init];
+    if (self) {
+        mUserSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
+        [mUserSelectedFilter setDefaults];
+    }
+    
+    return self;
+}
+#pragma mark - Public Interface
 
 - (void) setFileURL:(NSURL *)_fileURL
 {
@@ -28,14 +50,14 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
    
 }
 
-//- (void) getImage
+#pragma mark - Private Implementation
+
+
+// Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
 
     _inputImage = [CIImage imageWithContentsOfURL:fileURL];
 
-
-    
-    NSLog(@"%@",_inputImage.properties);
     
     CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
     NSAffineTransform *scaleAndRotate = [NSAffineTransform transform];
@@ -46,33 +68,27 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
     [filter setValue:scaleAndRotate forKey:kCIInputTransformKey];
     [filter setValue:_inputImage forKey:kCIInputImageKey];
    
-   
-
-
-    result = [filter valueForKey:kCIOutputImageKey]; // 4
-//    image = result;
+    mInputImage = [filter valueForKey:kCIOutputImageKey]; // 4
     
-//      NSLog(@"%f %f %f %f",image.extent.origin.x,image.extent.origin.y,image.extent.size.width,image.extent.size.height);
-
-     [[NSNotificationCenter defaultCenter] postNotificationName:BESCHAIN_MODEL_CHANGED object:self];
-
-}
-- (CIImage *) getOutputImage {
-    return result;
+    [mUserSelectedFilter setValue:mInputImage forKey:kCIInputImageKey];
+    mOutputImage = [mUserSelectedFilter valueForKey:kCIOutputImageKey];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:BESCHAIN_MODEL_CHANGED object:self];
+
 }
 
 #pragma mark - MainViewDataSource
 
 
 - (NSDictionary *) largeImages {
-    return @{kInputImage:result};
+    
+    return @{kInputImage:mInputImage,kOutputImage:mOutputImage};
 }
 
 # pragma mark - Scale Calculations
 
 // Getter for image dpi width value
-//
+
 - (float) dpiWidthForImage:(CIImage *) ciImage
 {
     NSDictionary *properties = [ciImage properties];
@@ -84,7 +100,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 
 // Getter for image dpi height value
-//
+
 - (float) dpiHeightForImage:(CIImage *) ciImage
 {
     NSDictionary *properties = [ciImage properties];
