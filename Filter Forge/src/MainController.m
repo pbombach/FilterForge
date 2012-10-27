@@ -12,13 +12,15 @@
 #import "MainView.h"
 
 
-//static NSString * const kDisplayInputImage = @"DisplayInputImage";
-//static NSString * const kDisplayOutputImage = @"DisplayOutputImage";
+static int const kDisplayInputImageTag           = 0;
+static int const kDisplayOutputImageTag          = 1;
+static int const kDisplayInputPlusOutputImageTag = 2;
 
-static int const kDisplayInputImage           = 0;
-static int const kDisplayOutputImage          = 1;
-static int const kDisplayInputPlusOutputImage = 2;
+static int const imageDisplayButtonPositionToImageDisplayMap[] = {MainViewInputImage,MainViewOutputImage,MainViewInputPlusOutputImage};
+static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToImageDisplayMap)/sizeof(int);
 
+static int const zoomButtonPositionToZoomMap[] = {ZOOM_IN,ZOOM_OUT,ZOOM_FIT};
+static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int);
 
 @interface MainController ()
 
@@ -36,7 +38,13 @@ static int const kDisplayInputPlusOutputImage = 2;
         
         // Register for notifications from the chain model
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChanged:) name:BESCHAIN_MODEL_CHANGED object:nil];
-        self.mDisplayedImage = MainViewInputImage;
+        
+        self.mDisplayedImage = 0; // Select first button by default
+        for (int i=0; i < numImageDisplaySegments; i++) {
+            if (imageDisplayButtonPositionToImageDisplayMap[i] == MainViewOutputImage) {
+                self.mDisplayedImage = i;
+            }
+        }
     }
     return self;
 }
@@ -44,28 +52,7 @@ static int const kDisplayInputPlusOutputImage = 2;
 - (void) updateUI {
     
     // Update the displayed image selector
-    int imageSelectionButton;
-    MainViewDisplayedImage displayedImage;
-    switch (self.mDisplayedImage) {
-        case MainViewInputImage:
-            imageSelectionButton = 0;
-            displayedImage = MainViewInputImage;
-            break;
-        case MainViewOutputImage:
-            imageSelectionButton = 1;
-            displayedImage = MainViewOutputImage;
-            break;
-        case MainViewInputPlusOutputImage:
-            displayedImage = MainViewInputPlusOutputImage;
-            imageSelectionButton = 2;
-            break;
-        default:
-            break;
-    }
-    [self.imageSelectionButtons setSelectedSegment:imageSelectionButton];
-    
-    // Tell the MainView to load the image
-
+    [self.imageSelectionButtons setSelectedSegment:self.mDisplayedImage];
     
 
 }
@@ -121,22 +108,16 @@ static int const kDisplayInputPlusOutputImage = 2;
 }
 
 - (IBAction)imageSelectionButtonClicked:(id)sender {
-    
-    NSInteger clickedSegmentTag = [sender selectedTag];
-    switch (clickedSegmentTag) {
-            // TODO: No magic numbers
-        case kDisplayInputImage:
-            [self.experimentalImageView displayInputImage];
-            break;
-        case kDisplayOutputImage:
-            [self.experimentalImageView displayOutputImage];
-            break;
-        case kDisplayInputPlusOutputImage:
-            [self.experimentalImageView displayInputPlusOutputImage];
-            break;
-        default:
-            break;
+    NSInteger selectedSegment = [sender selectedSegment];
+    MainViewDisplayedImage displayedImage;
+
+    if (self.mDisplayedImage < numImageDisplaySegments) {
+        displayedImage = imageDisplayButtonPositionToImageDisplayMap[selectedSegment];
     }
+    else {
+        displayedImage = MainViewInputImage;
+    }
+    [self.experimentalImageView displayImage:displayedImage];
     [self.experimentalImageView needsDisplay];
 }
 

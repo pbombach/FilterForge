@@ -29,7 +29,7 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
 
 @property (strong) CIContext *context;
 @property (strong) CIImage *currentImage;
-@property (assign)MainViewDisplayedImage displayedImage;
+@property (assign) MainViewDisplayedImage displayedImage;
 
 @end
 
@@ -38,6 +38,8 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
 
 @synthesize images = _images;
 
+
+# pragma mark - Initializer
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -53,6 +55,8 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
 }
 
 
+# pragma mark - Events and Notification Handlers
+
 - (void)sizeChanged:(NSNotification *)sender {
 
     [self contentViewSize];
@@ -67,33 +71,40 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     [self setNeedsDisplay:YES];
 }
 
-- (void) scaleZoom:(CGFloat)m atPoint:(CGPoint) point {
-
-    self.currentZoom *= 1+m;
-    self.currentZoom = MAX(1,MIN(200, self.currentZoom));
-
-    NSPoint currentScrollPoint = self.visibleRect.origin;
-    NSPoint newScrollPoint = currentScrollPoint;
-    NSPoint drawingOffset = [self drawingOffset];
+- (void) magnifyWithEvent:(NSEvent *)event {
     
+    CGFloat m = [event magnification];
+    [self scaleZoom:m atPoint:event.locationInWindow];
+}
+
+# pragma mark - Getters and Setters
+
+- (void) setImages:(NSDictionary *)images {
+    
+    // Save new image
+    _images = images;
+    
+    // TODO: Make sure that the input and output image are equal in size
+    
+    // Calculate the fit to zoom
+    [self calculateFitToWindowValues];
+    
+    // Reset the zoom
+    self.currentZoom = 1.0;
+    
+    // Calculate size based on magnifcation level
     [self contentViewSize];
     
+    // Scale current window
     [self scaleCurrentImage];
-
-    if ( !CGPointEqualToPoint(point, CGPointZero)) {
-        m = m+1;
-
-        if (self.currentImage.extent.size.height > self.superview.frame.size.height) {
-            newScrollPoint.y = (m-1)*point.y + m*(currentScrollPoint.y+drawingOffset.y);
-        }
-        
-        if (self.currentImage.extent.size.width > self.superview.frame.size.width) {
-            newScrollPoint.x = (m-1)*point.x + m*(currentScrollPoint.x+drawingOffset.x);
-        }
-    }
-
-    [self scrollPoint:newScrollPoint];
+    
+    [self scrollToCenter];
+    
+    // Redisplay
+    [self setNeedsDisplay:YES];
 }
+
+# pragma mark - Public API
 
 - (void) resetZoom {
     self.currentZoom = 1.0;
@@ -110,6 +121,18 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     [self zoomInOrOut:ZoomDirectionOut];
 }
 
+- (void) displayImage:(MainViewDisplayedImage)newImage {
+    if (newImage == MainViewInputImage || newImage == MainViewOutputImage || newImage == MainViewInputPlusOutputImage) {
+        self.displayedImage = newImage;
+        [self scaleCurrentImage];
+        [self setNeedsDisplay:YES];
+    }
+    else {
+        NSLog(@"Error: unrecognized image selected.");
+    }
+}
+
+#if 0
 - (void) displayInputImage {
     [self displayImage:MainViewInputImage];
 }
@@ -121,8 +144,9 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
 - (void) displayInputPlusOutputImage {
     [self displayImage:MainViewInputPlusOutputImage];
 }
+#endif
 
-
+# pragma mark - Private Implementation
 - (void) zoomInOrOut:(ZoomDirection) zoomDirection {
     
     // Calculate view midpoint
@@ -142,14 +166,36 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
             break;
     }
     [self scaleZoom:magnification atPoint:midPoint];
-
 }
 
-- (void) magnifyWithEvent:(NSEvent *)event {
 
-    CGFloat m = [event magnification];
-    [self scaleZoom:m atPoint:event.locationInWindow];
+- (void) scaleZoom:(CGFloat)m atPoint:(CGPoint) point {
+    
+    self.currentZoom *= 1+m;
+    self.currentZoom = MAX(1,MIN(200, self.currentZoom));
+    
+    NSPoint currentScrollPoint = self.visibleRect.origin;
+    NSPoint newScrollPoint = currentScrollPoint;
+    NSPoint drawingOffset = [self drawingOffset];
+    
+    [self contentViewSize];
+    
+    [self scaleCurrentImage];
+    
+    if ( !CGPointEqualToPoint(point, CGPointZero)) {
+        m = m+1;
+        
+        if (self.currentImage.extent.size.height > self.superview.frame.size.height) {
+            newScrollPoint.y = (m-1)*point.y + m*(currentScrollPoint.y+drawingOffset.y);
+        }
+        
+        if (self.currentImage.extent.size.width > self.superview.frame.size.width) {
+            newScrollPoint.x = (m-1)*point.x + m*(currentScrollPoint.x+drawingOffset.x);
+        }
+    }
+    [self scrollPoint:newScrollPoint];
 }
+
 
 
 - (void) contentViewSize {
@@ -186,21 +232,15 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     CGFloat wr = self.superview.frame.size.width/inputImage.extent.size.width;
     CGFloat hr =self.superview.frame.size.height/inputImage.extent.size.height;
     self.fitToWindowZoom = MIN(wr,hr);
-
-
 }
 
 - (void) scaleCurrentImage {
     
     NSAffineTransform *scale = [NSAffineTransform transform];
     [scale scaleBy:self.fitToWindowZoom*self.currentZoom];
-    
     CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
-    
     [filter setValue:scale forKey:kCIInputTransformKey];
-    
     CIImage *image;
-    
     switch (self.displayedImage) {
         case MainViewInputImage:
             image = [self imageForKey:kInputImage];
@@ -212,11 +252,7 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
             break;
     }
     [filter setValue:image forKey:kCIInputImageKey];
-    
-    
     self.currentImage = [filter valueForKey:kCIOutputImageKey];
-
-    
 }
 
 - (void) scrollToCenter {
@@ -224,37 +260,8 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     CGPoint offset = CGPointZero;
     offset.x = MAX(0,-(self.superview.frame.size.width - self.currentImage.extent.size.width)/2.0);
     offset.y = MAX(0,-(self.superview.frame.size.height - self.currentImage.extent.size.height)/2.0);
-    
     [self scrollPoint:offset];
 }
-
-
-
-- (void) setImages:(NSDictionary *)images {
-    
-    // Save new image
-    _images = images;
-    
-    // TODO: Make sure that the input and output image are equal in size
-    
-    // Calculate the fit to zoom
-    [self calculateFitToWindowValues];
-    
-    // Reset the zoom
-    self.currentZoom = 1.0;
-    
-    // Calculate size based on magnifcation level
-    [self contentViewSize];
-    
-    // Scale current window
-    [self scaleCurrentImage];
-    
-    [self scrollToCenter];
-
-    // Redisplay
-    [self setNeedsDisplay:YES];
-}
-
 
 - (NSPoint) drawingOffset {
     NSPoint offset = CGPointZero;
@@ -266,84 +273,18 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
 - (void)drawRect:(NSRect)dirtyRect {
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-   
-    
     if (self.currentImage != nil) {
         if (self.context == nil) {
             self.context = [CIContext contextWithCGContext:context options:nil];
         }
-       
-
         CGRect dst = dirtyRect;
         CGRect src = dirtyRect;
         CGPoint offset = CGPointZero;
         offset.x = (self.frame.size.width - self.currentImage.extent.size.width)/2.0;
         offset.y = (self.frame.size.height - self.currentImage.extent.size.height)/2.0;
-       
         dst.origin.x += offset.x;
         dst.origin.y += offset.y;
-
         [self.context drawImage:self.currentImage inRect:dst fromRect:src];
     }
-    else {
-        
-    }
 }
-
-- (void) displayImage:(MainViewDisplayedImage)newImage {
-    self.displayedImage = newImage;
-    [self scaleCurrentImage];
-    [self setNeedsDisplay:YES];
-}
-
-
-#pragma mark - Defunct Code
-
-- (void) drawCenterPointWithContext:(CGContextRef) currentContext {
-    [[NSColor whiteColor] set];
-    /* Get the current graphics context */
-    CGPoint superViewMidPoint = CGPointMake(self.superview.frame.size.width/2.,self.superview.frame.size.height/2);
-    CGPoint midPoint = [self convertPoint:superViewMidPoint fromView:self.superview];
-    midPoint.x += self.visibleRect.origin.x;
-    midPoint.y += self.visibleRect.origin.y;
-
-    NSLog(@"\n\n");
-    NSLog(@"Parent frame: %@",NSStringFromRect(self.superview.frame));
-    NSLog(@"My Frame: %@",NSStringFromRect(self.frame));
-    NSLog(@"My Bounds: %@",NSStringFromRect(self.bounds));
-
-
-//    NSLog(@"draw dirtyRect: %@",NSStringFromRect(dirtyRect));
-    NSLog(@"frameMidPoint: %@",NSStringFromPoint((NSPoint) midPoint));
-    NSLog(@"superViewMidPoint: %@",NSStringFromPoint((NSPoint) superViewMidPoint));
-    NSLog(@"draw visibleRec: %@",NSStringFromRect(self.visibleRect));
-//    NSPoint currentScrollPoint = self.visibleRect.origin;
-    CGPoint x1 = midPoint;
-    x1.x -= 25;
-    CGPoint x2 = midPoint;
-    x2.x += 25;
-
-    /* Set the width for the line */
-    CGContextSetLineWidth(currentContext,1.0f);
-    /* Start the line at this point */
-    CGContextMoveToPoint(currentContext,x1.x,x1.y);
-    /* And end it at this point */
-
-    CGContextAddLineToPoint(currentContext,x2.x,x2.y);
-    x1 = midPoint;
-    x1.y -= 25;
-    x2 = midPoint;
-    x2.y += 25;
-    CGContextMoveToPoint(currentContext,x1.x,x1.y);
-    /* And end it at this point */
-
-    CGContextAddLineToPoint(currentContext,x2.x,x2.y);
-
-
-    /* Use the context's current color to draw the line */
-    CGContextStrokePath(currentContext);
-
-}
-
-
 @end

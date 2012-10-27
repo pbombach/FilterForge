@@ -26,8 +26,6 @@ typedef enum _MainViewDisplayedImage {
 - (void) zoomOut;
 
 
-- (void) displayInputImage;
-- (void) displayOutputImage;
-- (void) displayInputPlusOutputImage;
+- (void) displayImage:(MainViewDisplayedImage)newImage;
 
 @end
