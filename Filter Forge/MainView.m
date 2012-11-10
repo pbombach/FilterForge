@@ -34,7 +34,7 @@ static CGFloat const ZoomMin = 1.0;
 
 @property (strong) CIContext *context;
 @property (strong) CIImage *currentImage;
-@property (assign) MainViewDisplayedImage displayedImage;
+@property (copy) NSString *displayedImage;
 
 @end
 
@@ -52,7 +52,7 @@ static CGFloat const ZoomMin = 1.0;
         // Initialization code here.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sizeChanged:) name:NSViewFrameDidChangeNotification object:self.superview];
         self.currentZoom = 1.0;
-        self.displayedImage = MainViewOutputImage;
+        self.displayedImage = kOutputImage;
     }
     
     return self;
@@ -61,7 +61,7 @@ static CGFloat const ZoomMin = 1.0;
 # pragma mark - Events and Notification Handlers
 
 - (void) sizeChanged:(NSNotification *)sender {
-
+    
     [self contentViewSize];
     CGFloat effectiveZoom = self.currentZoom*self.fitToWindowZoom;
     [self calculateFitToWindowValues];
@@ -120,15 +120,13 @@ static CGFloat const ZoomMin = 1.0;
     [self zoomInOrOut:ZoomDirectionOut];
 }
 
-- (void) displayImage:(MainViewDisplayedImage)newImage {
-    if (newImage == MainViewInputImage || newImage == MainViewOutputImage || newImage == MainViewInputPlusOutputImage) {
-        self.displayedImage = newImage;
-        [self scaleCurrentImage];
-        [self setNeedsDisplay:YES];
-    }
-    else {
-        NSLog(@"Error: unrecognized image selected.");
-    }
+- (void) displayImage:(NSString *)newImage {
+    
+    self.displayedImage = newImage;
+    [self scaleCurrentImage];
+    [self setNeedsDisplay:YES];
+    
+    
 }
 
 # pragma mark - Private Implementation
@@ -159,7 +157,7 @@ static CGFloat const ZoomMin = 1.0;
 }
 
 - (void) scaleZoom:(CGFloat)m atPoint:(CGPoint) point {
-
+    
     // Scale zoom and clip it to maximum value
     self.currentZoom *= 1+m;
     self.currentZoom = MAX(ZoomMin,MIN(ZoomMax, self.currentZoom));
@@ -208,7 +206,7 @@ static CGFloat const ZoomMin = 1.0;
         image = self.images[key];
     }
     return image;
-
+    
 }
 
 - (void) calculateFitToWindowValues {
@@ -225,21 +223,11 @@ static CGFloat const ZoomMin = 1.0;
     CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
     [filter setValue:scale forKey:kCIInputTransformKey];
     CIImage *image;
-    switch (self.displayedImage) {
-        case MainViewInputImage:
-            image = [self imageForKey:kInputImage];
-            break;
-        case MainViewOutputImage:
-            image = [self imageForKey:kOutputImage];
-            break;
-        case MainViewInputPlusOutputImage:
-            image = [self imageForKey:kInputPlusOutputImage];
-            break;
-        default:
-            break;
+    image = [self imageForKey:self.displayedImage];
+    if (image != nil ) {
+        [filter setValue:image forKey:kCIInputImageKey];
+        self.currentImage = [filter valueForKey:kCIOutputImageKey];
     }
-    [filter setValue:image forKey:kCIInputImageKey];
-    self.currentImage = [filter valueForKey:kCIOutputImageKey];
 }
 
 - (void) scrollToCenter {

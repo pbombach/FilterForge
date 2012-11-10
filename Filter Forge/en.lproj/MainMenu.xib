@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.SystemVersion">12C3006</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -1348,6 +1348,7 @@
 											<object class="NSSegmentItem">
 												<double key="NSSegmentItemWidth">62</double>
 												<string key="NSSegmentItemLabel">Fit</string>
+												<int key="NSSegmentItemTag">2</int>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 										</array>
@@ -1388,6 +1389,7 @@
 											<object class="NSSegmentItem">
 												<double key="NSSegmentItemWidth">90</double>
 												<string key="NSSegmentItemLabel">Input+Mask</string>
+												<int key="NSSegmentItemTag">2</int>
 												<int key="NSSegmentItemImageScaling">0</int>
 											</object>
 										</array>
@@ -1482,7 +1484,6 @@
 									<string key="NSFrame">{{1077, 20}, {55, 48}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="919460047">
@@ -1579,9 +1580,11 @@
 				<string key="NSClassName">MainController</string>
 			</object>
 			<object class="NSButton" id="624958162">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<string key="NSFrameSize">{82, 32}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSButtonCell" key="NSCell" id="840528352">
@@ -4230,17 +4233,11 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="contentView">NSView</string>
 						<string key="experimentalImageView">MainView</string>
 						<string key="imageSelectionButtons">NSSegmentedControl</string>
-						<string key="scrollView">NSScrollView</string>
 						<string key="zoomButtons">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="contentView">
-							<string key="name">contentView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="experimentalImageView">
 							<string key="name">experimentalImageView</string>
 							<string key="candidateClassName">MainView</string>
@@ -4248,10 +4245,6 @@
 						<object class="IBToOneOutletInfo" key="imageSelectionButtons">
 							<string key="name">imageSelectionButtons</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="scrollView">
-							<string key="name">scrollView</string>
-							<string key="candidateClassName">NSScrollView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="zoomButtons">
 							<string key="name">zoomButtons</string>

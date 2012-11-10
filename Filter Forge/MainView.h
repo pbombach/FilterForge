@@ -30,6 +30,6 @@ extern NSString * const kInputPlusOutputImage;
 - (void) zoomOut;
 
 
-- (void) displayImage:(MainViewDisplayedImage)newImage;
+- (void) displayImage:(NSString * const)newImage;
 
 @end

@@ -12,15 +12,21 @@
 #import "MainView.h"
 
 
-static int const kDisplayInputImageTag           = 0;
-static int const kDisplayOutputImageTag          = 1;
-static int const kDisplayInputPlusOutputImageTag = 2;
+static int const kDisplayInputImage           = 0;
+static int const kDisplayOutputImage          = 1;
+static int const kDisplayInputPlusOutputImage = 2;
+
+static int const kZoomOut           = 0;
+static int const kZoomIn          = 1;
+static int const kZoomFit          = 2;
+
 
 static int const imageDisplayButtonPositionToImageDisplayMap[] = {MainViewInputImage,MainViewOutputImage,MainViewInputPlusOutputImage};
+
 static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToImageDisplayMap)/sizeof(int);
 
-static int const zoomButtonPositionToZoomMap[] = {ZOOM_IN,ZOOM_OUT,ZOOM_FIT};
-static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int);
+//static int const zoomButtonPositionToZoomMap[] = {ZOOM_IN,ZOOM_OUT,ZOOM_FIT};
+//static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int);
 
 @interface MainController ()
 
@@ -31,6 +37,9 @@ static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int
 @implementation MainController
 
 - (id) init {
+
+    NSArray * const map = @[kInputImage,kOutputImage,kInputPlusOutputImage];
+
     self = [super init];
     if (self) {
         // Create an instance of the chain model
@@ -50,6 +59,7 @@ static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int
 }
 
 - (void) updateUI {
+    
     
     // Update the displayed image selector
     [self.imageSelectionButtons setSelectedSegment:self.mDisplayedImage];
@@ -92,14 +102,17 @@ static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int
 
 - (IBAction)zoomButtonClicked:(id)sender {
     long clickedSegment = [sender selectedSegment];
+//    clickedSegment = [self.zoomButtons selectedTag];
+//    clickedSegment = [sender tag];
+//    clickedSegment = [sender selectedTag];
     switch (clickedSegment) {
-        case ZOOM_IN:
+        case kZoomIn:
             [self.experimentalImageView zoomIn];
             break;
-        case ZOOM_OUT:
+        case kZoomOut:
             [self.experimentalImageView zoomOut];
             break;
-        case ZOOM_FIT:
+        case kZoomFit:
             [self.experimentalImageView resetZoom];
             break;
         default:
@@ -108,16 +121,31 @@ static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int
 }
 
 - (IBAction)imageSelectionButtonClicked:(id)sender {
-    NSInteger selectedSegment = [sender selectedSegment];
-    MainViewDisplayedImage displayedImage;
-
-    if (self.mDisplayedImage < numImageDisplaySegments) {
-        displayedImage = imageDisplayButtonPositionToImageDisplayMap[selectedSegment];
+    NSInteger selectedSegment = [sender selectedTag];
+    selectedSegment = [sender selectedSegment];
+//    MainViewDisplayedImage displayedImage;
+//
+//    if (self.mDisplayedImage < numImageDisplaySegments) {
+//        displayedImage = imageDisplayButtonPositionToImageDisplayMap[selectedSegment];
+//    }
+//    else {
+//        displayedImage = MainViewInputImage;
+//    }
+//    [self.experimentalImageView displayImage:displayedImage];
+    switch (selectedSegment) {
+        case kDisplayInputImage:
+            [self.experimentalImageView displayImage:kInputImage];
+            break;
+        case kDisplayOutputImage:
+            [self.experimentalImageView displayImage:kOutputImage];
+            break;
+        case kDisplayInputPlusOutputImage:
+            [self.experimentalImageView displayImage:kInputPlusOutputImage];
+            break;
+        default:
+            [self.experimentalImageView displayImage:kInputImage];
+            break;
     }
-    else {
-        displayedImage = MainViewInputImage;
-    }
-    [self.experimentalImageView displayImage:displayedImage];
     [self.experimentalImageView needsDisplay];
 }
 
