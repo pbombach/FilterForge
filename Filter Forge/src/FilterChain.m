@@ -9,6 +9,7 @@
 
 #import <Quartz/Quartz.h>
 #import "FilterChain.h"
+#import "MaskToAlpha.h"
 
 /*
  #pragma mark - Synthesized Properties
@@ -22,6 +23,13 @@
 
 NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
+// Local ivars
+@interface FilterChain()
+
+@property(strong) CIFilter *maskToAlpha;
+
+@end
+
 @implementation FilterChain
 
 
@@ -30,6 +38,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
     if (self) {
         mUserSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
         [mUserSelectedFilter setDefaults];
+        self.maskToAlpha = nil;
     }
     
     return self;
@@ -57,7 +66,13 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 -(void) process {
 
     _inputImage = [CIImage imageWithContentsOfURL:fileURL];
+    
+    if (self.maskToAlpha == nil) {
 
+        [MaskToAlpha class];
+        self.maskToAlpha = [CIFilter filterWithName:kMaskToAlphaName];
+        [self.maskToAlpha setDefaults];
+    }
     
     CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
     NSAffineTransform *scaleAndRotate = [NSAffineTransform transform];
@@ -73,6 +88,21 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
     [mUserSelectedFilter setValue:mInputImage forKey:kCIInputImageKey];
     mOutputImage = [mUserSelectedFilter valueForKey:kCIOutputImageKey];
     
+    [self.maskToAlpha setValue:mOutputImage forKey:kCIInputImageKey];
+    CIImage *maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
+    
+    CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
+    [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
+    [sourceOverFilter setValue:mInputImage forKey:kCIInputBackgroundImageKey];
+    
+    self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
+//    self.compositeImage = maskImage;
+//    mOutputImage = maskImage;
+//    self.compositeImage = maskImage;
+    self.inputImage = mInputImage;
+    self.outputImage = mOutputImage;
+
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:BESCHAIN_MODEL_CHANGED object:self];
 
 }
@@ -82,7 +112,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 - (NSDictionary *) largeImages {
     
-    return @{kInputImage:mInputImage,kOutputImage:mOutputImage};
+    return @{kInputImage:mInputImage,kOutputImage:mOutputImage,kInputPlusOutputImage:self.compositeImage};
 }
 
 # pragma mark - Scale Calculations

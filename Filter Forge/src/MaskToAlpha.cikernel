@@ -1,0 +1,31 @@
+/*
+
+*/
+
+
+kernel vec4 maskToAlphaKernel(sampler image,float alphaScale,float outputValue)
+{
+  vec4 inColor = unpremultiply(sample(image, samplerCoord(image)));
+  float alpha = floor((inColor.r+inColor.b+inColor.g)/3.+.9)*alphaScale;
+ // alpha = 1.0;
+  vec4 outColor;
+  
+  outColor.r = outputValue;
+  outColor.g = outputValue;
+  outColor.b = outputValue;
+  outColor.a = alpha;
+  outColor.r = 1.0;
+  outColor.g = 0.0;
+  outColor.b = 0.0;
+//  outColor.a = 0.0;
+
+
+  return premultiply(outColor);
+}
+
+/*
+kernel vec4 maskToAlphNoop(sampler image)
+{
+  return sample(image,samplerCoord(image));
+}
+*/

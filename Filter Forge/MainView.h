@@ -15,6 +15,10 @@ typedef enum _MainViewDisplayedImage {
     MainViewInputPlusOutputImage    = 2
 } MainViewDisplayedImage;
 
+extern NSString * const kInputImage;
+extern NSString * const kOutputImage;
+extern NSString * const kInputPlusOutputImage;
+
 @interface MainView : NSView
 {
 }

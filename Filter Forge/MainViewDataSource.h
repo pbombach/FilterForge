@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString * const kInputImage = @"inputImage";
-static NSString * const kOutputImage = @"outputImage";
+extern NSString * const kInputImage;
+extern NSString * const kOutputImage;
+extern NSString * const kInputPlusOutputImage;
 
 @protocol MainViewDataSource <NSObject>
 

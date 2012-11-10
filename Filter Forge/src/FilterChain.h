@@ -20,10 +20,12 @@ extern NSString *const BESCHAIN_MODEL_CHANGED;// = @"BESCHAIN_MODEL_CHANGED_NOTI
     CIImage *mInputImage;
     
     CIFilter *mUserSelectedFilter;
+
 }
 
 @property (strong) CIImage *inputImage;
-
+@property (strong) CIImage *outputImage;
+@property (strong) CIImage *compositeImage;
 
 - (void) setFileURL:(NSURL *) fileURL;
 

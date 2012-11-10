@@ -15,10 +15,15 @@ typedef enum {
     ZoomDirectionOut = 1,
 } ZoomDirection;
 
+NSString * const kInputImage = @"inputImage";
+NSString * const kOutputImage = @"outputImage";
+NSString * const kInputPlusOutputImage = @"inputPlusOutputImage";
 
 
-static CGFloat defaultZoomInMagnification = .41421356237309; // magnification = 1+m => 1 - sqrt(2)
-static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2)
+static CGFloat const defaultZoomInMagnification = .41421356237309; // magnification = 1+m => 1 - sqrt(2)
+static CGFloat const defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2)
+static CGFloat const ZoomMax = 200.;
+static CGFloat const ZoomMin = 1.0;
 
 @interface MainView ()
 
@@ -38,11 +43,10 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
 
 @synthesize images = _images;
 
-
 # pragma mark - Initializer
 
-- (id)initWithFrame:(NSRect)frame
-{
+- (id)initWithFrame:(NSRect)frame {
+    
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
@@ -54,20 +58,15 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     return self;
 }
 
-
 # pragma mark - Events and Notification Handlers
 
-- (void)sizeChanged:(NSNotification *)sender {
+- (void) sizeChanged:(NSNotification *)sender {
 
     [self contentViewSize];
-    
     CGFloat effectiveZoom = self.currentZoom*self.fitToWindowZoom;
-    
     [self calculateFitToWindowValues];
     self.currentZoom = MAX(1,effectiveZoom/self.fitToWindowZoom);
-
     [self scaleCurrentImage];
-    
     [self setNeedsDisplay:YES];
 }
 
@@ -132,27 +131,16 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     }
 }
 
-#if 0
-- (void) displayInputImage {
-    [self displayImage:MainViewInputImage];
-}
-
-- (void) displayOutputImage {
-    [self displayImage:MainViewOutputImage];
-}
-
-- (void) displayInputPlusOutputImage {
-    [self displayImage:MainViewInputPlusOutputImage];
-}
-#endif
-
 # pragma mark - Private Implementation
+
 - (void) zoomInOrOut:(ZoomDirection) zoomDirection {
     
     // Calculate view midpoint
     CGPoint midPoint;
     midPoint.x = self.superview.frame.size.width/2.0;
     midPoint.y = self.superview.frame.size.height/2.0;
+    
+    // Select magnification
     CGFloat magnification;
     switch (zoomDirection) {
         case ZoomDirectionIn:
@@ -165,14 +153,16 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
             magnification = 1.0; // No zoom
             break;
     }
+    
+    // Set scale
     [self scaleZoom:magnification atPoint:midPoint];
 }
 
-
 - (void) scaleZoom:(CGFloat)m atPoint:(CGPoint) point {
-    
+
+    // Scale zoom and clip it to maximum value
     self.currentZoom *= 1+m;
-    self.currentZoom = MAX(1,MIN(200, self.currentZoom));
+    self.currentZoom = MAX(ZoomMin,MIN(ZoomMax, self.currentZoom));
     
     NSPoint currentScrollPoint = self.visibleRect.origin;
     NSPoint newScrollPoint = currentScrollPoint;
@@ -196,11 +186,9 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     [self scrollPoint:newScrollPoint];
 }
 
-
-
 - (void) contentViewSize {
     CGSize size = CGSizeZero;
-    CIImage *inputImage = [self inputImage];
+    CIImage *inputImage = [self imageForKey:kInputImage];
     
     if ( inputImage == nil) {
         size = self.superview.frame.size;
@@ -222,13 +210,9 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     return image;
 
 }
-- (CIImage *)inputImage {
-    return [self imageForKey:kInputImage];
-}
-
 
 - (void) calculateFitToWindowValues {
-    CIImage *inputImage = [self inputImage];
+    CIImage *inputImage = [self imageForKey:kInputImage];
     CGFloat wr = self.superview.frame.size.width/inputImage.extent.size.width;
     CGFloat hr =self.superview.frame.size.height/inputImage.extent.size.height;
     self.fitToWindowZoom = MIN(wr,hr);
@@ -247,6 +231,9 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
             break;
         case MainViewOutputImage:
             image = [self imageForKey:kOutputImage];
+            break;
+        case MainViewInputPlusOutputImage:
+            image = [self imageForKey:kInputPlusOutputImage];
             break;
         default:
             break;
@@ -270,7 +257,7 @@ static CGFloat defaultZoomOutMagnification = -0.292893218813450; // 1 - 1/sqrt(2
     return offset;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void) drawRect:(NSRect)dirtyRect {
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     if (self.currentImage != nil) {
