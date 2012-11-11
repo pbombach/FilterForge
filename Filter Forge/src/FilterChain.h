@@ -13,13 +13,6 @@ extern NSString *const BESCHAIN_MODEL_CHANGED;// = @"BESCHAIN_MODEL_CHANGED_NOTI
 
 @interface FilterChain : NSObject<MainViewDataSource>
 {
-    NSURL *fileURL;
-    CIImage *result;
-    CIImage *mOutputImage;
-    CIImage *mCompositedImage;
-    CIImage *mInputImage;
-    
-    CIFilter *mUserSelectedFilter;
 
 }
 
@@ -28,7 +21,5 @@ extern NSString *const BESCHAIN_MODEL_CHANGED;// = @"BESCHAIN_MODEL_CHANGED_NOTI
 @property (strong) CIImage *compositeImage;
 
 - (void) setFileURL:(NSURL *) fileURL;
-
-//- (CIImage *) getOutputImage;
 
 @end

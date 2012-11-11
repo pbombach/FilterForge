@@ -8,7 +8,6 @@
 #import <Quartz/Quartz.h>
 
 #import "MainView.h"
-#import "MainViewDataSource.h"
 
 typedef enum {
     ZoomDirectionIn = 0,

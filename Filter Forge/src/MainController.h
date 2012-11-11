@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
+#import "MainViewDataSource.h"
 
 #pragma mark - Forward Declarations
 

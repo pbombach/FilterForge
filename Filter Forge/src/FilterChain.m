@@ -26,8 +26,9 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 // Local ivars
 @interface FilterChain()
 
-@property(strong) CIFilter *maskToAlpha;
-
+@property (strong) CIFilter *maskToAlpha;
+@property (strong) CIFilter *userSelectedFilter;
+@property (nonatomic, strong) NSURL *fileURL;
 @end
 
 @implementation FilterChain
@@ -36,36 +37,33 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 - (id) init {
     self = [super init];
     if (self) {
-        mUserSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
-        [mUserSelectedFilter setDefaults];
+        self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
+        [self.userSelectedFilter setDefaults];
         self.maskToAlpha = nil;
     }
     
     return self;
 }
+
 #pragma mark - Public Interface
 
-- (void) setFileURL:(NSURL *)_fileURL
-{
+- (void) setFileURL:(NSURL *) afileURL {
     // Don't do anything if the file hasn't changed
-    if ([fileURL isEqual:_fileURL]) {
+    if ([self.fileURL isEqual:afileURL]) {
         return;
     }
     
-    fileURL = _fileURL;
+    _fileURL = afileURL;
     [self process];
     
-    // Notify controller that image is dirty
-   
 }
 
 #pragma mark - Private Implementation
 
-
 // Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
 
-    _inputImage = [CIImage imageWithContentsOfURL:fileURL];
+    self.inputImage = [CIImage imageWithContentsOfURL:self.fileURL];
     
     if (self.maskToAlpha == nil) {
 
@@ -83,25 +81,19 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
     [filter setValue:scaleAndRotate forKey:kCIInputTransformKey];
     [filter setValue:_inputImage forKey:kCIInputImageKey];
    
-    mInputImage = [filter valueForKey:kCIOutputImageKey]; // 4
+    self.inputImage = [filter valueForKey:kCIOutputImageKey]; // 4
     
-    [mUserSelectedFilter setValue:mInputImage forKey:kCIInputImageKey];
-    mOutputImage = [mUserSelectedFilter valueForKey:kCIOutputImageKey];
+    [self.userSelectedFilter setValue:_inputImage forKey:kCIInputImageKey];
+    self.outputImage = [self.userSelectedFilter valueForKey:kCIOutputImageKey];
     
-    [self.maskToAlpha setValue:mOutputImage forKey:kCIInputImageKey];
+    [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
     CIImage *maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
     
     CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
     [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
-    [sourceOverFilter setValue:mInputImage forKey:kCIInputBackgroundImageKey];
+    [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
     
     self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
-//    self.compositeImage = maskImage;
-//    mOutputImage = maskImage;
-//    self.compositeImage = maskImage;
-    self.inputImage = mInputImage;
-    self.outputImage = mOutputImage;
-
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BESCHAIN_MODEL_CHANGED object:self];
 
@@ -109,18 +101,15 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 #pragma mark - MainViewDataSource
 
-
-- (NSDictionary *) largeImages {
+- (NSDictionary *) images {
     
-    return @{kInputImageKey:mInputImage,kOutputImageKey:mOutputImage,kCompositeImageKey:self.compositeImage};
+    return @{kInputImageKey:_inputImage,kOutputImageKey:_outputImage,kCompositeImageKey:self.compositeImage};
 }
 
 # pragma mark - Scale Calculations
 
 // Getter for image dpi width value
-
-- (float) dpiWidthForImage:(CIImage *) ciImage
-{
+- (float) dpiWidthForImage:(CIImage *) ciImage {
     NSDictionary *properties = [ciImage properties];
 
     NSNumber* val = [properties objectForKey:(id)kCGImagePropertyDPIWidth];
@@ -130,9 +119,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 
 // Getter for image dpi height value
-
-- (float) dpiHeightForImage:(CIImage *) ciImage
-{
+- (float) dpiHeightForImage:(CIImage *) ciImage {
     NSDictionary *properties = [ciImage properties];
     NSNumber* val = [properties objectForKey:(id)kCGImagePropertyDPIHeight];
     float  f = [val floatValue];
@@ -141,9 +128,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 
 // Getter for display orientation of the image.
-//
-- (int) orientationForImage:(CIImage *) ciImage
-{
+- (int) orientationForImage:(CIImage *) ciImage {
     // If present, the value of the kCGImagePropertyOrientation key is a
     // CFNumberRef with the same value as defined by the TIFF and Exif
     // specifications.  That is:
@@ -166,9 +151,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 
 // Getter for image transform
-//
-- (NSAffineTransformStruct) transformForImage:(CIImage *)ciImage
-{
+- (NSAffineTransformStruct) transformForImage:(CIImage *)ciImage {
     float xdpi = [self dpiWidthForImage:ciImage];
     float ydpi = [self dpiHeightForImage:ciImage];
     int orient = [self orientationForImage:ciImage];
@@ -191,6 +174,5 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
     
     return ctms[orient-1];
 }
-
 
 @end

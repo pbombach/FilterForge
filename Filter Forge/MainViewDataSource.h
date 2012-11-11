@@ -14,6 +14,6 @@ extern NSString * const kCompositeImageKey;
 
 @protocol MainViewDataSource <NSObject>
 
-- (NSDictionary *) largeImages;
+- (NSDictionary *) images;
 
 @end
