@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kInputImage;
-extern NSString * const kOutputImage;
-extern NSString * const kInputPlusOutputImage;
+extern NSString * const kInputImageKey;
+extern NSString * const kOutputImageKey;
+extern NSString * const kCompositeImageKey;
 
 @protocol MainViewDataSource <NSObject>
 

@@ -15,9 +15,9 @@
 //    MainViewInputPlusOutputImage    = 2
 //} MainViewDisplayedImage;
 
-extern NSString * const kInputImage;
-extern NSString * const kOutputImage;
-extern NSString * const kInputPlusOutputImage;
+extern NSString * const kInputImageKey;
+extern NSString * const kOutputImageKey;
+extern NSString * const kCompositeImageKey;
 
 @interface MainView : NSView
 {

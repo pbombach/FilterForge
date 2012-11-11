@@ -15,9 +15,9 @@ typedef enum {
     ZoomDirectionOut = 1,
 } ZoomDirection;
 
-NSString * const kInputImage = @"inputImage";
-NSString * const kOutputImage = @"outputImage";
-NSString * const kInputPlusOutputImage = @"inputPlusOutputImage";
+NSString * const kInputImageKey = @"inputImage";
+NSString * const kOutputImageKey = @"outputImage";
+NSString * const kCompositeImageKey = @"inputPlusOutputImage";
 
 
 static CGFloat const defaultZoomInMagnification = .41421356237309; // magnification = 1+m => 1 - sqrt(2)
@@ -52,7 +52,7 @@ static CGFloat const ZoomMin = 1.0;
         // Initialization code here.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sizeChanged:) name:NSViewFrameDidChangeNotification object:self.superview];
         self.currentZoom = 1.0;
-        self.displayedImage = kOutputImage;
+        self.displayedImage = kOutputImageKey;
     }
     
     return self;
@@ -186,7 +186,7 @@ static CGFloat const ZoomMin = 1.0;
 
 - (void) contentViewSize {
     CGSize size = CGSizeZero;
-    CIImage *inputImage = [self imageForKey:kInputImage];
+    CIImage *inputImage = [self imageForKey:kInputImageKey];
     
     if ( inputImage == nil) {
         size = self.superview.frame.size;
@@ -210,7 +210,7 @@ static CGFloat const ZoomMin = 1.0;
 }
 
 - (void) calculateFitToWindowValues {
-    CIImage *inputImage = [self imageForKey:kInputImage];
+    CIImage *inputImage = [self imageForKey:kInputImageKey];
     CGFloat wr = self.superview.frame.size.width/inputImage.extent.size.width;
     CGFloat hr =self.superview.frame.size.height/inputImage.extent.size.height;
     self.fitToWindowZoom = MIN(wr,hr);

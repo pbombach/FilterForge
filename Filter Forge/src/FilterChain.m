@@ -112,7 +112,7 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 - (NSDictionary *) largeImages {
     
-    return @{kInputImage:mInputImage,kOutputImage:mOutputImage,kInputPlusOutputImage:self.compositeImage};
+    return @{kInputImageKey:mInputImage,kOutputImageKey:mOutputImage,kCompositeImageKey:self.compositeImage};
 }
 
 # pragma mark - Scale Calculations

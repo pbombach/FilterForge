@@ -108,16 +108,16 @@ static int const kZoomFit = 2;
 -(void) displayImage:(NSInteger) image {
     switch (image) {
         case kDisplayInputImage:
-            [self.experimentalImageView displayImage:kInputImage];
+            [self.experimentalImageView displayImage:kInputImageKey];
             break;
         case kDisplayOutputImage:
-            [self.experimentalImageView displayImage:kOutputImage];
+            [self.experimentalImageView displayImage:kOutputImageKey];
             break;
         case kDisplayInputPlusOutputImage:
-            [self.experimentalImageView displayImage:kInputPlusOutputImage];
+            [self.experimentalImageView displayImage:kCompositeImageKey];
             break;
         default:
-            [self.experimentalImageView displayImage:kInputImage];
+            [self.experimentalImageView displayImage:kInputImageKey];
             break;
     }
     [self.experimentalImageView needsDisplay];
