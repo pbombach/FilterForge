@@ -75,7 +75,7 @@ static int const kZoomFit = 2;
 #pragma mark - Core Logic
 
 - (void)modelChanged:(NSNotification *)sender {
-    self.experimentalImageView.images =  @{kInputImageKey:chain.inputImage,kOutputImageKey:chain.outputImage,kCompositeImageKey:chain.compositeImage};
+    self.mainView.images =  @{kInputImageKey:chain.inputImage,kOutputImageKey:chain.outputImage,kCompositeImageKey:chain.compositeImage};
 }
 
 #pragma mark - BESMainViewDataSource
@@ -92,13 +92,13 @@ static int const kZoomFit = 2;
     
     switch (clickedSegment) {
         case kZoomIn:
-            [self.experimentalImageView zoomIn];
+            [self.mainView zoomIn];
             break;
         case kZoomOut:
-            [self.experimentalImageView zoomOut];
+            [self.mainView zoomOut];
             break;
         case kZoomFit:
-            [self.experimentalImageView resetZoom];
+            [self.mainView resetZoom];
             break;
         default:
             break;
@@ -108,19 +108,19 @@ static int const kZoomFit = 2;
 -(void) displayImage:(NSInteger) image {
     switch (image) {
         case kDisplayInputImage:
-            [self.experimentalImageView displayImage:kInputImageKey];
+            [self.mainView displayImage:kInputImageKey];
             break;
         case kDisplayOutputImage:
-            [self.experimentalImageView displayImage:kOutputImageKey];
+            [self.mainView displayImage:kOutputImageKey];
             break;
         case kDisplayInputPlusOutputImage:
-            [self.experimentalImageView displayImage:kCompositeImageKey];
+            [self.mainView displayImage:kCompositeImageKey];
             break;
         default:
-            [self.experimentalImageView displayImage:kInputImageKey];
+            [self.mainView displayImage:kInputImageKey];
             break;
     }
-    [self.experimentalImageView needsDisplay];
+    [self.mainView needsDisplay];
 }
 
 - (IBAction)imageSelectionButtonClicked:(id)sender {

@@ -21,19 +21,6 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Filter Forge/src/MainController.m"
-         timestampString = "374337254.056174"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "79"
-         endingLineNumber = "79"
-         landmarkName = "-modelChanged:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Filter Forge/src/MainController.m"
          timestampString = "374287313.9848"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
