@@ -14,20 +14,8 @@
 @class FilterChain;
 @class MainView;
 
-//typedef enum {
-//    ZOOM_OUT = 0,
-//    ZOOM_IN = 1,
-//    ZOOM_FIT = 2
-//} ZOOM_CONTROLS;
-//
-
 @interface MainController : NSObject
 {
-    // UI Elements
-    
-  
-    
-    
     // Model
     __strong FilterChain *chain;
 }

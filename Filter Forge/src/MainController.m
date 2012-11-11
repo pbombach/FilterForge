@@ -11,22 +11,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MainView.h"
 
-
 static int const kDisplayInputImage           = 0;
 static int const kDisplayOutputImage          = 1;
 static int const kDisplayInputPlusOutputImage = 2;
 
-static int const kZoomOut           = 0;
-static int const kZoomIn          = 1;
-static int const kZoomFit          = 2;
-
-
-static int const imageDisplayButtonPositionToImageDisplayMap[] = {MainViewInputImage,MainViewOutputImage,MainViewInputPlusOutputImage};
-
-static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToImageDisplayMap)/sizeof(int);
-
-//static int const zoomButtonPositionToZoomMap[] = {ZOOM_IN,ZOOM_OUT,ZOOM_FIT};
-//static int const numZoomButtons = sizeof(zoomButtonPositionToZoomMap)/sizeof(int);
+static int const kZoomOut = 0;
+static int const kZoomIn  = 1;
+static int const kZoomFit = 2;
 
 @interface MainController ()
 
@@ -37,9 +28,8 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
 @implementation MainController
 
 - (id) init {
-
-    NSArray * const map = @[kInputImage,kOutputImage,kInputPlusOutputImage];
-
+    
+    
     self = [super init];
     if (self) {
         // Create an instance of the chain model
@@ -48,12 +38,7 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
         // Register for notifications from the chain model
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChanged:) name:BESCHAIN_MODEL_CHANGED object:nil];
         
-        self.mDisplayedImage = 0; // Select first button by default
-        for (int i=0; i < numImageDisplaySegments; i++) {
-            if (imageDisplayButtonPositionToImageDisplayMap[i] == MainViewOutputImage) {
-                self.mDisplayedImage = i;
-            }
-        }
+        self.mDisplayedImage = kDisplayInputPlusOutputImage; // Select first button by default
     }
     return self;
 }
@@ -63,8 +48,9 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
     
     // Update the displayed image selector
     [self.imageSelectionButtons setSelectedSegment:self.mDisplayedImage];
+    [self imageSelectionButtonClicked:self.imageSelectionButtons];
     
-
+    
 }
 #pragma mark - Actions
 
@@ -76,11 +62,11 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
     
     // Set the file in the chain
     [chain setFileURL:openPanel.URL];
-
+    
 }
 
 - (IBAction)edgeButtonClicked:(id)sender {
- 
+    
 }
 
 - (IBAction)outputButtonClicked:(id)sender {
@@ -100,11 +86,10 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
     [self updateUI];
 }
 
+
 - (IBAction)zoomButtonClicked:(id)sender {
     long clickedSegment = [sender selectedSegment];
-//    clickedSegment = [self.zoomButtons selectedTag];
-//    clickedSegment = [sender tag];
-//    clickedSegment = [sender selectedTag];
+    
     switch (clickedSegment) {
         case kZoomIn:
             [self.experimentalImageView zoomIn];
@@ -120,19 +105,8 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
     }
 }
 
-- (IBAction)imageSelectionButtonClicked:(id)sender {
-    NSInteger selectedSegment = [sender selectedTag];
-    selectedSegment = [sender selectedSegment];
-//    MainViewDisplayedImage displayedImage;
-//
-//    if (self.mDisplayedImage < numImageDisplaySegments) {
-//        displayedImage = imageDisplayButtonPositionToImageDisplayMap[selectedSegment];
-//    }
-//    else {
-//        displayedImage = MainViewInputImage;
-//    }
-//    [self.experimentalImageView displayImage:displayedImage];
-    switch (selectedSegment) {
+-(void) displayImage:(NSInteger) image {
+    switch (image) {
         case kDisplayInputImage:
             [self.experimentalImageView displayImage:kInputImage];
             break;
@@ -147,6 +121,11 @@ static int const numImageDisplaySegments = sizeof(imageDisplayButtonPositionToIm
             break;
     }
     [self.experimentalImageView needsDisplay];
+}
+
+- (IBAction)imageSelectionButtonClicked:(id)sender {
+    NSInteger clickedSegment = [sender selectedSegment];
+    [self displayImage:clickedSegment];
 }
 
 @end
