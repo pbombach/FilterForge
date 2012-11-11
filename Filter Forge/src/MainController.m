@@ -45,13 +45,12 @@ static int const kZoomFit = 2;
 
 - (void) updateUI {
     
-    
     // Update the displayed image selector
     [self.imageSelectionButtons setSelectedSegment:self.mDisplayedImage];
     [self imageSelectionButtonClicked:self.imageSelectionButtons];
     
-    
 }
+
 #pragma mark - Actions
 
 - (IBAction)inputButtonClicked:(id)sender {
