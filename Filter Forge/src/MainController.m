@@ -75,7 +75,7 @@ static int const kZoomFit = 2;
 #pragma mark - Core Logic
 
 - (void)modelChanged:(NSNotification *)sender {
-    self.experimentalImageView.images = chain.images;
+    self.experimentalImageView.images =  @{kInputImageKey:chain.inputImage,kOutputImageKey:chain.outputImage,kCompositeImageKey:chain.compositeImage};
 }
 
 #pragma mark - BESMainViewDataSource

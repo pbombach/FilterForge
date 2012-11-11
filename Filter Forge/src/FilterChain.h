@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MainViewDataSource.h"
 
 extern NSString *const BESCHAIN_MODEL_CHANGED;// = @"BESCHAIN_MODEL_CHANGED_NOTIFICAITON";
 
-@interface FilterChain : NSObject<MainViewDataSource>
+@interface FilterChain : NSObject
 {
 
 }

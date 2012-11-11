@@ -65,7 +65,6 @@
 		8A648A37160FCE7B0099EBFA /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainController.m; path = src/MainController.m; sourceTree = "<group>"; };
 		8A7DA762161C82CE005AAA4B /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		8A7DA763161C82CE005AAA4B /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
-		8A7DA76A161C8356005AAA4B /* MainViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewDataSource.h; sourceTree = "<group>"; };
 		8A9B737A162A28F600603927 /* lock_24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_24x24.png; sourceTree = "<group>"; };
 		8AAD493216135AF600E92BDA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8AAD493516135B2300E92BDA /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -221,7 +220,6 @@
 				8A648A10160FB6C00099EBFA /* MainMenu.xib */,
 				8A7DA762161C82CE005AAA4B /* MainView.h */,
 				8A7DA763161C82CE005AAA4B /* MainView.m */,
-				8A7DA76A161C8356005AAA4B /* MainViewDataSource.h */,
 			);
 			name = View;
 			sourceTree = "<group>";

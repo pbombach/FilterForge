@@ -99,13 +99,6 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 
 }
 
-#pragma mark - MainViewDataSource
-
-- (NSDictionary *) images {
-    
-    return @{kInputImageKey:_inputImage,kOutputImageKey:_outputImage,kCompositeImageKey:self.compositeImage};
-}
-
 # pragma mark - Scale Calculations
 
 // Getter for image dpi width value
