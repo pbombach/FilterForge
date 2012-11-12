@@ -10,6 +10,8 @@
 #import "FilterChain.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MainView.h"
+#import "ControlPanelViewController.h"
+#import "SettingsViewController.h"
 
 static int const kDisplayInputImage           = 0;
 static int const kDisplayOutputImage          = 1;
@@ -69,6 +71,17 @@ static int const kZoomFit = 2;
 }
 
 - (IBAction)outputButtonClicked:(id)sender {
+}
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    SettingsViewController *controlPanelViewController = [[SettingsViewController alloc]initWithNibName:nil bundle:nil] ;
+    NSWindow * cpvWindow = [controlPanelViewController.view window];
+    
+    [NSApp runModalForWindow: cpvWindow];
+    
+    [NSApp endSheet: cpvWindow];
+    
+    [cpvWindow orderOut: self];
 }
 
 #pragma mark - Core Logic

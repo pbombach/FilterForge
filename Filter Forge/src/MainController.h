@@ -28,6 +28,7 @@
 - (IBAction)inputButtonClicked:(id)sender;
 - (IBAction)edgeButtonClicked:(id)sender;
 - (IBAction)outputButtonClicked:(id)sender;
+- (IBAction)settingsButtonClicked:(id)sender;
 
 @property (weak) IBOutlet MainView *mainView;
 @property (weak) IBOutlet NSSegmentedControl *zoomButtons;
