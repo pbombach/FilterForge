@@ -77,26 +77,40 @@ static CGFloat const ZoomMin = 1.0;
 
 # pragma mark - Getters and Setters
 
+- (void) nImages:(NSDictionary *) images {
+    _images = images;
+    [self setNeedsDisplay:YES];
+}
+
 - (void) setImages:(NSDictionary *)images {
     
+    // Check to see if the input image changed
+    BOOL inputImageChanged = images[kInputImageKey] != self.images[kInputImageKey];
+        
     // Save new image
     _images = images;
     
     // TODO: Make sure that the input and output image are equal in size
     
-    // Calculate the fit to zoom
-    [self calculateFitToWindowValues];
+    if (inputImageChanged) {
+             
+        // Calculate the fit to zoom
+        [self calculateFitToWindowValues];
+        
+        // Reset the zoom
+        self.currentZoom = 1.0;
+        
+        // Calculate size based on magnifcation level
+        [self contentViewSize];
+        
+        // Scale current window
+        [self scaleCurrentImage];
+        
+        [self scrollToCenter];
+    }
     
-    // Reset the zoom
-    self.currentZoom = 1.0;
-    
-    // Calculate size based on magnifcation level
-    [self contentViewSize];
-    
-    // Scale current window
-    [self scaleCurrentImage];
-    
-    [self scrollToCenter];
+    self.currentImage = images[self.displayedImage];
+    [self scaleCurrentImage];   
     
     // Redisplay
     [self setNeedsDisplay:YES];
@@ -247,6 +261,8 @@ static CGFloat const ZoomMin = 1.0;
 - (void) drawRect:(NSRect)dirtyRect {
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    NSLog(@"dirtyRect = %@", NSStringFromRect(dirtyRect));
+
     if (self.currentImage != nil) {
         if (self.context == nil) {
             self.context = [CIContext contextWithCGContext:context options:nil];

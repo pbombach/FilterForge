@@ -30,14 +30,14 @@
 - (IBAction)outputButtonClicked:(id)sender;
 - (IBAction)settingsButtonClicked:(id)sender;
 
-@property (weak) IBOutlet MainView *mainView;
-@property (weak) IBOutlet NSSegmentedControl *zoomButtons;
-
-
 #pragma mark - Properties
-@property (weak) IBOutlet NSSegmentedControl *imageSelectionButtons;
+@property (strong) IBOutlet MainView *mainView;
+@property (strong) IBOutlet NSSegmentedControl *zoomButtons;
+@property (strong) IBOutlet NSWindow *settingsWindow;
+@property (strong) IBOutlet NSSegmentedControl *imageSelectionButtons;
 
 #pragma mark - Core Logic
 - (void) modelChanged:(NSNotification *) sender;
+- (void) setFilterOpacity:(float) opacity;
 
 @end

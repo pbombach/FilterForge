@@ -9,15 +9,19 @@
 #import <Foundation/Foundation.h>
 
 extern NSString *const BESCHAIN_MODEL_CHANGED;// = @"BESCHAIN_MODEL_CHANGED_NOTIFICAITON";
+extern NSString * const kInputImageChangedKey;
+extern NSString * const kOutputImageChangedKey;
+extern NSString * const kCompositeImageChangedKey;
 
 @interface FilterChain : NSObject
 {
-
+    float _opacity;
 }
 
 @property (strong) CIImage *inputImage;
 @property (strong) CIImage *outputImage;
 @property (strong) CIImage *compositeImage;
+@property (assign,nonatomic) float opacity;
 
 - (void) setFileURL:(NSURL *) fileURL;
 

@@ -21,11 +21,9 @@
 		8A648A31160FB8CC0099EBFA /* FilterChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A30160FB8CC0099EBFA /* FilterChain.m */; };
 		8A648A38160FCE7B0099EBFA /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A648A37160FCE7B0099EBFA /* MainController.m */; };
 		8A7DA764161C82CE005AAA4B /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DA763161C82CE005AAA4B /* MainView.m */; };
-		8A88DB07164FFC8F0032AA4E /* ControlPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A88DB06164FFC8F0032AA4E /* ControlPanelViewController.xib */; };
-		8A88DB0A165050C50032AA4E /* ControlPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A88DB09165050C50032AA4E /* ControlPanelViewController.m */; };
-		8A88DB1116505C630032AA4E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A88DB0F16505C630032AA4E /* SettingsViewController.m */; };
-		8A88DB1216505C630032AA4E /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A88DB1016505C630032AA4E /* SettingsViewController.xib */; };
 		8A9B737B162A28F600603927 /* lock_24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A9B737A162A28F600603927 /* lock_24x24.png */; };
+		8AAAA89116514BD00073BF2C /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAAA89016514BD00073BF2C /* SettingsController.m */; };
+		8AAAA89316514F5D0073BF2C /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AAAA89216514F5D0073BF2C /* SettingsView.xib */; };
 		8AAD493616135B2300E92BDA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAD493516135B2300E92BDA /* Quartz.framework */; };
 		8AF34C30161150FF00EBB017 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF34C2F161150FF00EBB017 /* QuartzCore.framework */; };
 		8AF6FB8C163CD1B800BB6390 /* MaskToAlpha.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 8AF6FB8B163CD1B800BB6390 /* MaskToAlpha.cikernel */; };
@@ -69,13 +67,10 @@
 		8A648A37160FCE7B0099EBFA /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainController.m; path = src/MainController.m; sourceTree = "<group>"; };
 		8A7DA762161C82CE005AAA4B /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		8A7DA763161C82CE005AAA4B /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
-		8A88DB06164FFC8F0032AA4E /* ControlPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanelViewController.xib; sourceTree = "<group>"; };
-		8A88DB08165050C50032AA4E /* ControlPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPanelViewController.h; sourceTree = "<group>"; };
-		8A88DB09165050C50032AA4E /* ControlPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlPanelViewController.m; sourceTree = "<group>"; };
-		8A88DB0E16505C620032AA4E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		8A88DB0F16505C630032AA4E /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		8A88DB1016505C630032AA4E /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		8A9B737A162A28F600603927 /* lock_24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_24x24.png; sourceTree = "<group>"; };
+		8AAAA88F16514BD00073BF2C /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
+		8AAAA89016514BD00073BF2C /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
+		8AAAA89216514F5D0073BF2C /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 		8AAD493216135AF600E92BDA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8AAD493516135B2300E92BDA /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		8AF34C2F161150FF00EBB017 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -212,11 +207,8 @@
 				8A648A0E160FB6C00099EBFA /* AppDelegate.m */,
 				8A648A36160FCE7B0099EBFA /* MainController.h */,
 				8A648A37160FCE7B0099EBFA /* MainController.m */,
-				8A88DB08165050C50032AA4E /* ControlPanelViewController.h */,
-				8A88DB09165050C50032AA4E /* ControlPanelViewController.m */,
-				8A88DB0E16505C620032AA4E /* SettingsViewController.h */,
-				8A88DB0F16505C630032AA4E /* SettingsViewController.m */,
-				8A88DB1016505C630032AA4E /* SettingsViewController.xib */,
+				8AAAA88F16514BD00073BF2C /* SettingsController.h */,
+				8AAAA89016514BD00073BF2C /* SettingsController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -235,7 +227,7 @@
 				8A648A10160FB6C00099EBFA /* MainMenu.xib */,
 				8A7DA762161C82CE005AAA4B /* MainView.h */,
 				8A7DA763161C82CE005AAA4B /* MainView.m */,
-				8A88DB06164FFC8F0032AA4E /* ControlPanelViewController.xib */,
+				8AAAA89216514F5D0073BF2C /* SettingsView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -326,8 +318,7 @@
 				8A9B737B162A28F600603927 /* lock_24x24.png in Resources */,
 				8A355E05162C483A00E93C03 /* Vision.txt in Resources */,
 				8AF6FB8C163CD1B800BB6390 /* MaskToAlpha.cikernel in Resources */,
-				8A88DB07164FFC8F0032AA4E /* ControlPanelViewController.xib in Resources */,
-				8A88DB1216505C630032AA4E /* SettingsViewController.xib in Resources */,
+				8AAAA89316514F5D0073BF2C /* SettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,8 +359,7 @@
 				8A648A38160FCE7B0099EBFA /* MainController.m in Sources */,
 				8A7DA764161C82CE005AAA4B /* MainView.m in Sources */,
 				8AF6FB90163CD2F800BB6390 /* MaskToAlpha.m in Sources */,
-				8A88DB0A165050C50032AA4E /* ControlPanelViewController.m in Sources */,
-				8A88DB1116505C630032AA4E /* SettingsViewController.m in Sources */,
+				8AAAA89116514BD00073BF2C /* SettingsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

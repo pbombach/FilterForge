@@ -12,7 +12,7 @@
 static CIKernel *maskToAlpha = nil;
 
 NSString * const kMaskToAlphaScale = @"alphaScale";
-NSString * const kMaskToAlphaOutputValue = @"OutputValue";
+NSString * const kMaskToAlphaOutputValue = @"pmbOutputValue";
 NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 
@@ -46,9 +46,6 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
     {
         NSBundle    *bundle = [NSBundle bundleForClass: [self class]];
         NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"MaskToAlpha" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
-//        NSString    *code = [NSString stringWithContentsOfFile: [bundle
-//                                                                 pathForResource: @"MaskToAlpha"
-//                                                                 ofType: @"cikernel"]];
         NSArray     *kernels = [CIKernel kernelsWithString: code2];
         maskToAlpha = [kernels objectAtIndex:0] ;
     }
@@ -89,17 +86,9 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 - (CIImage *)outputImage
 {
 
-    NSDictionary * attributes = [self attributes];
-    
-   // inputImage = [attributes objectForKey:kCIInputImageKey];
-    alphaScale = [attributes objectForKey:kMaskToAlphaScale];
-    outputValue = [attributes objectForKey:kMaskToAlphaOutputValue];
-    float malphaScale = 0.5;
-    float moutputValue = 1.0;
-    
     CISampler *src = [CISampler samplerWithImage: inputImage];
 
-    CIImage *outImage = [self apply:maskToAlpha,src,[NSNumber numberWithFloat:malphaScale],[NSNumber numberWithFloat:moutputValue],kCIApplyOptionDefinition, [src definition],nil] ;
+    CIImage *outImage = [self apply:maskToAlpha,src,alphaScale,[NSNumber numberWithFloat:0.0f],kCIApplyOptionDefinition, [src definition],nil] ;
 
     return outImage;
 }

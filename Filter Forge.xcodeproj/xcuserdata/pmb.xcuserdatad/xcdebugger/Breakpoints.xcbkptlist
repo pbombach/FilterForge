@@ -7,13 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Filter Forge/src/MainController.m"
-         timestampString = "374365560.206417"
+         filePath = "Filter Forge/MainView.m"
+         timestampString = "374775654.577771"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
-         landmarkName = "-inputButtonClicked:"
+         startingLineNumber = "263"
+         endingLineNumber = "263"
+         landmarkName = "-drawRect:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -10,8 +10,7 @@
 #import "FilterChain.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MainView.h"
-#import "ControlPanelViewController.h"
-#import "SettingsViewController.h"
+#import "SettingsController.h"
 
 static int const kDisplayInputImage           = 0;
 static int const kDisplayOutputImage          = 1;
@@ -24,6 +23,7 @@ static int const kZoomFit = 2;
 @interface MainController ()
 
 @property (assign) int mDisplayedImage;
+@property (strong) SettingsController *settingsController;
 
 @end
 
@@ -41,6 +41,8 @@ static int const kZoomFit = 2;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChanged:) name:BESCHAIN_MODEL_CHANGED object:nil];
         
         self.mDisplayedImage = kDisplayInputPlusOutputImage; // Select first button by default
+        
+        self.settingsController = nil;
     }
     return self;
 }
@@ -74,14 +76,13 @@ static int const kZoomFit = 2;
 }
 
 - (IBAction)settingsButtonClicked:(id)sender {
-    SettingsViewController *controlPanelViewController = [[SettingsViewController alloc]initWithNibName:nil bundle:nil] ;
-    NSWindow * cpvWindow = [controlPanelViewController.view window];
     
-    [NSApp runModalForWindow: cpvWindow];
-    
-    [NSApp endSheet: cpvWindow];
-    
-    [cpvWindow orderOut: self];
+   // [NSApp beginSheet:self.settingsWindow modalForWindow:[self.mainView window] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    if (self.settingsController == nil) {
+        self.settingsController = [[SettingsController alloc]init];
+        self.settingsController.mainController = self;
+    }
+    [self.settingsController showWindow:self];
 }
 
 #pragma mark - Core Logic
@@ -138,6 +139,10 @@ static int const kZoomFit = 2;
 - (IBAction)imageSelectionButtonClicked:(id)sender {
     NSInteger clickedSegment = [sender selectedSegment];
     [self displayImage:clickedSegment];
+}
+
+- (void) setFilterOpacity:(float)opacity {
+    chain.opacity = opacity;
 }
 
 @end

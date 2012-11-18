@@ -22,6 +22,10 @@
  */
 
 NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
+NSString * const kInputImageChangedKey = @"InputImageChangedKey";
+NSString * const kOutputImageChangedKey = @"InputImageChangedKey";;
+NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
+
 
 // Local ivars
 @interface FilterChain()
@@ -29,6 +33,10 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 @property (strong) CIFilter *maskToAlpha;
 @property (strong) CIFilter *userSelectedFilter;
 @property (nonatomic, strong) NSURL *fileURL;
+
+@property (assign) bool newInput;
+@property (assign) bool refilterInput;
+@property (assign) bool reComposite;
 @end
 
 @implementation FilterChain
@@ -40,6 +48,10 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
         [self.userSelectedFilter setDefaults];
         self.maskToAlpha = nil;
+        _opacity = 0.5;
+        self.newInput = true;
+        self.refilterInput = true;
+        self.reComposite = true;
     }
     
     return self;
@@ -54,6 +66,10 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
     }
     
     _fileURL = afileURL;
+    
+    self.newInput = YES;
+    self.refilterInput = YES;
+    self.reComposite = YES;
     [self process];
     
 }
@@ -63,7 +79,11 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
 // Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
 
-    self.inputImage = [CIImage imageWithContentsOfURL:self.fileURL];
+    BOOL inputImageChanged = NO;
+    BOOL outputImageChanged = NO;
+   
+
+
     
     if (self.maskToAlpha == nil) {
 
@@ -72,31 +92,56 @@ NSString *const BESCHAIN_MODEL_CHANGED = @"BESCHAIN_MODEL_CHANGED";
         [self.maskToAlpha setDefaults];
     }
     
-    CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
-    NSAffineTransform *scaleAndRotate = [NSAffineTransform transform];
+    if (self.newInput) {
+        
+        self.inputImage = [CIImage imageWithContentsOfURL:self.fileURL];
+        
+        CIFilter *filter = [CIFilter filterWithName:@"CIAffineTransform"];
+        NSAffineTransform *scaleAndRotate = [NSAffineTransform transform];
+        
+        NSAffineTransformStruct cgAffineTransform = [self transformForImage:_inputImage];
+        [scaleAndRotate setTransformStruct:cgAffineTransform];
+        
+        [filter setValue:scaleAndRotate forKey:kCIInputTransformKey];
+        [filter setValue:_inputImage forKey:kCIInputImageKey];
+        
+        self.inputImage = [filter valueForKey:kCIOutputImageKey]; // 4
+        self.newInput = false;
+        inputImageChanged = YES;
+    }
     
-    NSAffineTransformStruct cgAffineTransform = [self transformForImage:_inputImage];
-    [scaleAndRotate setTransformStruct:cgAffineTransform];
-
-    [filter setValue:scaleAndRotate forKey:kCIInputTransformKey];
-    [filter setValue:_inputImage forKey:kCIInputImageKey];
-   
-    self.inputImage = [filter valueForKey:kCIOutputImageKey]; // 4
+    if (self.refilterInput) {
+        [self.userSelectedFilter setValue:_inputImage forKey:kCIInputImageKey];
+        self.outputImage = [self.userSelectedFilter valueForKey:kCIOutputImageKey];
+        self.refilterInput = false;
+        outputImageChanged = YES;
+    }
     
-    [self.userSelectedFilter setValue:_inputImage forKey:kCIInputImageKey];
-    self.outputImage = [self.userSelectedFilter valueForKey:kCIOutputImageKey];
+    if (self.reComposite) {
     
-    [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
-    CIImage *maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
+        [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
+        [self.maskToAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kMaskToAlphaScale];
+        //  [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaOutputValue];
+        
+        CIImage *maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
+        
+        CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
+        [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
+        [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
+        
+        self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
+        self.reComposite = false;
+    }
     
-    CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
-    [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
-    [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
-    
-    self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
-    
+//    NSDictionary * userInfo = @{kInputImageChangedKey : [NSNumber numberWithBool:inputImageChanged],kOutputImageChangedKey : [NSNumber numberWithBool:outputImageChanged],kCompositeImageChangedKey : [NSNumber numberWithBool:YES]};
     [[NSNotificationCenter defaultCenter] postNotificationName:BESCHAIN_MODEL_CHANGED object:self];
 
+}
+
+- (void) setOpacity:(float)opacity {
+    _opacity = opacity;
+    self.reComposite = true;
+    [self process];
 }
 
 # pragma mark - Scale Calculations
