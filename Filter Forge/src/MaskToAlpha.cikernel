@@ -3,19 +3,18 @@
 */
 
 
-kernel vec4 maskToAlphaKernel(sampler image,float alphaScale,float outputValue)
+kernel vec4 maskToAlphaKernel(sampler image,float alphaScale,__color mapColor)
 {
   vec4 inColor = unpremultiply(sample(image, samplerCoord(image)));
   float alpha = floor((inColor.r+inColor.b+inColor.g)/3.+.9)*alphaScale;
 
-  vec4 mapColor;
   vec4 outColor;
 
 
-  mapColor.r = 1.0;
-  mapColor.g = 0.0;
-  mapColor.b = 0.0;
-  mapColor.a = 1.0;
+//  mapColor.r = 1.0;
+//  mapColor.g = 0.0;
+//  mapColor.b = 0.0;
+//  mapColor.a = 1.0;
 
 
 //  outColor.r = outputValue;

@@ -121,6 +121,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     
         [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
         [self.maskToAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kMaskToAlphaScale];
+        [self.maskToAlpha setValue:[NSColor blueColor] forKey:kMaskToAlphaMapColor];
         //  [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaOutputValue];
         
         CIImage *maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];

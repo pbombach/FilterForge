@@ -10,6 +10,7 @@
 
 extern NSString * const kMaskToAlphaScale; //= @"alphaScale";
 extern NSString * const kMaskToAlphaOutputValue;// = @"OutputValue";
+extern NSString * const kMaskToAlphaMapColor;
 extern NSString * const kMaskToAlphaName;
 
 @interface MaskToAlpha : CIFilter
@@ -17,7 +18,7 @@ extern NSString * const kMaskToAlphaName;
     CIImage   *inputImage;
     CIImage   *outputImage;
     NSNumber  *alphaScale;
-    NSNumber  *outputValue;
+    NSColor   *mapColor;
 }
 
 @end

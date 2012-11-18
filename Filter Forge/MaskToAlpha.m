@@ -12,7 +12,7 @@
 static CIKernel *maskToAlpha = nil;
 
 NSString * const kMaskToAlphaScale = @"alphaScale";
-NSString * const kMaskToAlphaOutputValue = @"pmbOutputValue";
+NSString * const kMaskToAlphaMapColor = @"mapColor";
 NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 
@@ -69,17 +69,15 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
         kCIAttributeType      : kCIAttributeTypeScalar
     };
     
-    NSDictionary *outputValueAttributes =
+    NSDictionary * mapColorAttributes =
     @{
-        kCIAttributeMin       : @0.0,
-        kCIAttributeMax       : @1.0,
-        kCIAttributeSliderMin : @0.0,
-        kCIAttributeSliderMax : @1.0,
-        kCIAttributeDefault   : @0.5,
-        kCIAttributeType      : kCIAttributeTypeScalar
+    kCIAttributeDefault : [CIColor colorWithRed:1.0
+                                          green:1.0
+                                           blue:1.0
+                                          alpha:1.0]
     };
     
-    return @{kMaskToAlphaOutputValue:outputValueAttributes,kMaskToAlphaScale:alphaScaleAttributes};
+    return @{kMaskToAlphaMapColor:mapColorAttributes,kMaskToAlphaScale:alphaScaleAttributes};
 
 }
 
@@ -88,7 +86,7 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
     CISampler *src = [CISampler samplerWithImage: inputImage];
 
-    CIImage *outImage = [self apply:maskToAlpha,src,alphaScale,[NSNumber numberWithFloat:0.0f],kCIApplyOptionDefinition, [src definition],nil] ;
+    CIImage *outImage = [self apply:maskToAlpha,src,alphaScale,mapColor,kCIApplyOptionDefinition, [src definition],nil] ;
 
     return outImage;
 }
