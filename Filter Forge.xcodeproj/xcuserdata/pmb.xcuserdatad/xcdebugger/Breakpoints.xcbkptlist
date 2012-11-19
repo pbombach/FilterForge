@@ -7,13 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Filter Forge/MainView.m"
-         timestampString = "374775654.577771"
+         filePath = "Filter Forge/src/FilterChain.m"
+         timestampString = "375030225.882639"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "263"
-         endingLineNumber = "263"
-         landmarkName = "-drawRect:"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
+         landmarkName = "-setMaskColor:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

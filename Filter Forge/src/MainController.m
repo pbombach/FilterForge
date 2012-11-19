@@ -23,8 +23,9 @@ static int const kZoomFit = 2;
 @interface MainController ()
 
 @property (assign) int mDisplayedImage;
-@property (strong) SettingsController *settingsController;
 
+@property (strong) SettingsController *settingsController;
+@property (strong) FilterChain *chain;
 @end
 
 @implementation MainController
@@ -35,7 +36,7 @@ static int const kZoomFit = 2;
     self = [super init];
     if (self) {
         // Create an instance of the chain model
-        chain = [[FilterChain alloc]init];
+        _chain = [[FilterChain alloc]init];
         
         // Register for notifications from the chain model
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChanged:) name:BESCHAIN_MODEL_CHANGED object:nil];
@@ -64,7 +65,7 @@ static int const kZoomFit = 2;
     [openPanel runModal];
     
     // Set the file in the chain
-    [chain setFileURL:openPanel.URL];
+    [self.chain setFileURL:openPanel.URL];
     
 }
 
@@ -82,13 +83,15 @@ static int const kZoomFit = 2;
         self.settingsController = [[SettingsController alloc]init];
         self.settingsController.mainController = self;
     }
+    self.settingsController.filterChain = self.chain;
+    
     [self.settingsController showWindow:self];
 }
 
 #pragma mark - Core Logic
 
 - (void)modelChanged:(NSNotification *)sender {
-    self.mainView.images =  @{kInputImageKey:chain.inputImage,kOutputImageKey:chain.outputImage,kCompositeImageKey:chain.compositeImage};
+    self.mainView.images =  @{kInputImageKey:self.chain.inputImage,kOutputImageKey:self.chain.outputImage,kCompositeImageKey:self.chain.compositeImage};
 }
 
 #pragma mark - BESMainViewDataSource
@@ -142,7 +145,11 @@ static int const kZoomFit = 2;
 }
 
 - (void) setFilterOpacity:(float)opacity {
-    chain.opacity = opacity;
+    self.chain.opacity = opacity;
+}
+
+- (void) setMaskColor:(NSColor *)maskColor {
+    self.chain.maskColor = maskColor;
 }
 
 @end

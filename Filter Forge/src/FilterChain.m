@@ -48,7 +48,8 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
         [self.userSelectedFilter setDefaults];
         self.maskToAlpha = nil;
-        _opacity = 0.5;
+        _opacity = 0.25;
+        _maskColor = [NSColor redColor];
         self.newInput = true;
         self.refilterInput = true;
         self.reComposite = true;
@@ -121,7 +122,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     
         [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
         [self.maskToAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kMaskToAlphaScale];
-        [self.maskToAlpha setValue:[NSColor blueColor] forKey:kMaskToAlphaMapColor];
+        [self.maskToAlpha setValue:self.maskColor forKey:kMaskToAlphaMapColor];
         //  [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaOutputValue];
         
         CIImage *maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
@@ -139,8 +140,23 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 
 }
 
+- (void) setMaskColor:(NSColor *)maskColor {
+    _maskColor = maskColor;
+    self.reComposite = true;
+    [self process];
+}
+- (NSColor *) maskColor {
+    return _maskColor;
+}
+
 - (void) setOpacity:(float)opacity {
     _opacity = opacity;
+    self.reComposite = true;
+    [self process];
+}
+
+- (void) setIsMask:(BOOL)isMask {
+    _isMask = isMask;
     self.reComposite = true;
     [self process];
 }

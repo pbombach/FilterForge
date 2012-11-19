@@ -16,8 +16,6 @@
 
 @interface MainController : NSObject
 {
-    // Model
-    __strong FilterChain *chain;
 }
 
 // Actions
@@ -39,5 +37,6 @@
 #pragma mark - Core Logic
 - (void) modelChanged:(NSNotification *) sender;
 - (void) setFilterOpacity:(float) opacity;
+- (void) setMaskColor:(NSColor *) color;
 
 @end

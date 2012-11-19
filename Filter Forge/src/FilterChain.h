@@ -16,13 +16,17 @@ extern NSString * const kCompositeImageChangedKey;
 @interface FilterChain : NSObject
 {
     float _opacity;
+    NSColor *_maskColor;
 }
 
 @property (strong) CIImage *inputImage;
 @property (strong) CIImage *outputImage;
 @property (strong) CIImage *compositeImage;
-@property (assign,nonatomic) float opacity;
 
+@property (assign,nonatomic) float opacity;
+@property (strong) NSColor * maskColor;
+@property (assign,nonatomic) BOOL isMask;
+           
 - (void) setFileURL:(NSURL *) fileURL;
 
 @end

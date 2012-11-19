@@ -261,8 +261,7 @@ static CGFloat const ZoomMin = 1.0;
 - (void) drawRect:(NSRect)dirtyRect {
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    NSLog(@"dirtyRect = %@", NSStringFromRect(dirtyRect));
-
+  
     if (self.currentImage != nil) {
         if (self.context == nil) {
             self.context = [CIContext contextWithCGContext:context options:nil];

@@ -9,13 +9,21 @@
 #import <Cocoa/Cocoa.h>
 
 @class MainController;
+@class FilterChain;
 
 @interface SettingsController : NSWindowController
 {
 }
 - (IBAction)opacitySliderMoved:(id)sender;
+- (IBAction)filterCheckBoxToggled:(id)sender;
+- (IBAction)colorChanged:(id)sender;
+
+@property (weak) IBOutlet NSTextField *mapColorLabel;
+@property (weak) IBOutlet NSColorWell *mapColorSelector;
+@property (weak) IBOutlet NSSlider *opacitySlider;
+
+@property (weak) FilterChain *filterChain;
 
 @property (weak) MainController *mainController;
-
 
 @end
