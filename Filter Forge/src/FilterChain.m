@@ -96,8 +96,8 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     
     if (self.alphaBlend == nil) {
         [AlphaBlend class];
-        self.maskToAlpha = [CIFilter filterWithName:kMaskToAlphaName];
-        [self.maskToAlpha setDefaults];
+        self.alphaBlend = [CIFilter filterWithName:kAlphaBlendName];
+        [self.alphaBlend setDefaults];
     }
     
     if (self.newInput) {
@@ -145,6 +145,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 //        [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
         [self.alphaBlend setValue:maskImage forKey:kAlphaBlendInputImageAKey];
         [self.alphaBlend setValue:self.inputImage forKey:kAlphaBlendInputImageBKey];
+        [self.alphaBlend setValue:[NSNumber numberWithFloat:self.opacity] forKey:kAlphaBlendOpacityKey];
         
         self.compositeImage = [self.alphaBlend valueForKey:@"outputImage"];
         self.reComposite = false;

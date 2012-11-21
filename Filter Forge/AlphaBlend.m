@@ -46,9 +46,9 @@ NSString * const kAlphaBlendName = @"AlphaBlend";
     if(alphaBlendKernel == nil)// 1
     {
         NSBundle    *bundle = [NSBundle bundleForClass: [self class]];
-        NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"MaskToAlpha" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
+        NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"AlphaBlend" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
         NSArray     *kernels = [CIKernel kernelsWithString: code2];
-        alphaBlendKernel = [kernels objectAtIndex:1] ;
+        alphaBlendKernel = [kernels objectAtIndex:0] ;
     }
     return [super init];
 }

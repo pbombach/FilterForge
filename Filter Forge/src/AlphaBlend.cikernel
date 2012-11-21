@@ -1,0 +1,10 @@
+/*
+
+*/
+
+
+kernel vec4 alphaBlend(sampler imageA,sampler i
+mageB,float opacity)
+{
+  return sample(imageA,samplerCoord(imageA));
+}
