@@ -1,22 +1,23 @@
 //
-//  MaskToAlpha.m
+//  AlphaBlend.m
 //  Filter Forge
 //
 //  Created by Paul Bombach on 10/27/12.
 //  Copyright (c) 2012 Blue Eagle Software. All rights reserved.
 //
 
-#import "MaskToAlpha.h"
+#import "AlphaBlend.h"
 
 
-static CIKernel *maskToAlpha = nil;
+static CIKernel *alphaBlendKernel = nil;
 
-NSString * const kMaskToAlphaScale = @"alphaScale";
-NSString * const kMaskToAlphaMapColor = @"mapColor";
-NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
+NSString * const kAlphaBlendOpacityKey = @"opacity";
+NSString * const kAlphaBlendInputImageAKey = @"inputImageA";
+NSString * const kAlphaBlendInputImageBKey = @"inputImageB";
+NSString * const kAlphaBlendName = @"AlphaBlend";
 
 
-@implementation MaskToAlpha
+@implementation AlphaBlend
 
 
 + (CIFilter *)filterWithName: (NSString *)name
@@ -28,10 +29,10 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 + (void)initialize
 {
-    [CIFilter registerFilterName:kMaskToAlphaName
+    [CIFilter registerFilterName:kAlphaBlendName
                      constructor: (id<CIFilterConstructor>) self
                  classAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"Mask To Alpha", kCIAttributeFilterDisplayName,
+                                   @"AlphaBlend", kCIAttributeFilterDisplayName,
                                    [NSArray arrayWithObjects:
                                     kCICategoryColorAdjustment, kCICategoryVideo,
                                     kCICategoryStillImage,kCICategoryInterlaced,
@@ -42,12 +43,12 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 - (id)init
 {
-    if(maskToAlpha == nil)// 1
+    if(alphaBlendKernel == nil)// 1
     {
         NSBundle    *bundle = [NSBundle bundleForClass: [self class]];
         NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"MaskToAlpha" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
         NSArray     *kernels = [CIKernel kernelsWithString: code2];
-        maskToAlpha = [kernels objectAtIndex:0] ;
+        alphaBlendKernel = [kernels objectAtIndex:1] ;
     }
     return [super init];
 }
@@ -59,7 +60,7 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 - (NSDictionary *)customAttributes
 {
-    NSDictionary * alphaScaleAttributes =
+    NSDictionary * opacityAttrib =
     @{
         kCIAttributeMin       : @0.0,
         kCIAttributeMax       : @1.0,
@@ -69,24 +70,17 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
         kCIAttributeType      : kCIAttributeTypeScalar
     };
     
-    NSDictionary * mapColorAttributes =
-    @{
-    kCIAttributeDefault : [CIColor colorWithRed:1.0
-                                          green:1.0
-                                           blue:1.0
-                                          alpha:1.0]
-    };
-    
-    return @{kMaskToAlphaMapColor:mapColorAttributes,kMaskToAlphaScale:alphaScaleAttributes};
+    return @{kAlphaBlendOpacityKey:opacityAttrib};
 
 }
 
 - (CIImage *)outputImage
 {
 
-    CISampler *src = [CISampler samplerWithImage: inputImage];
+    CISampler *srcA = [CISampler samplerWithImage: inputImageA];
+    CISampler *srcB =[CISampler samplerWithImage: inputImageB];
 
-    CIImage *outImage = [self apply:maskToAlpha,src,alphaScale,self->mapColor,kCIApplyOptionDefinition, [src definition],nil] ;
+    CIImage *outImage = [self apply:alphaBlendKernel,srcA,srcB,opacity,kCIApplyOptionDefinition, [srcA definition],nil] ;
 
     return outImage;
 }

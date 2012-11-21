@@ -37,9 +37,8 @@ kernel vec4 maskToAlphaKernel(sampler image,float alphaScale,__color mapColor)
 }
 
 
-/*
-kernel vec4 maskToAlphNoop(sampler image)
+
+kernel vec4 maskToAlphNoop(sampler imageA,sampleImageB,float opacity)
 {
   return sample(image,samplerCoord(image));
 }
-*/

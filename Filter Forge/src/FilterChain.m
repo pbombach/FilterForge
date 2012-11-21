@@ -10,6 +10,7 @@
 #import <Quartz/Quartz.h>
 #import "FilterChain.h"
 #import "MaskToAlpha.h"
+#import "AlphaBlend.h"
 
 /*
  #pragma mark - Synthesized Properties
@@ -31,12 +32,14 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 @interface FilterChain()
 
 @property (strong) CIFilter *maskToAlpha;
+@property (strong) CIFilter *alphaBlend;
 @property (strong) CIFilter *userSelectedFilter;
 @property (nonatomic, strong) NSURL *fileURL;
 
 @property (assign) bool newInput;
 @property (assign) bool refilterInput;
 @property (assign) bool reComposite;
+
 @end
 
 @implementation FilterChain
@@ -83,13 +86,16 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 
     BOOL inputImageChanged = NO;
     BOOL outputImageChanged = NO;
-   
-
-
     
     if (self.maskToAlpha == nil) {
 
         [MaskToAlpha class];
+        self.maskToAlpha = [CIFilter filterWithName:kMaskToAlphaName];
+        [self.maskToAlpha setDefaults];
+    }
+    
+    if (self.alphaBlend == nil) {
+        [AlphaBlend class];
         self.maskToAlpha = [CIFilter filterWithName:kMaskToAlphaName];
         [self.maskToAlpha setDefaults];
     }
@@ -122,9 +128,11 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     if (self.reComposite) {
     
         CIImage *maskImage;
+
+      
         if (self.isMask) {
             [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
-            [self.maskToAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kMaskToAlphaScale];
+            [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaScale];
             [self.maskToAlpha setValue:self.maskColor forKey:kMaskToAlphaMapColor];
             maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
         }
@@ -132,11 +140,13 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
             maskImage = self.outputImage;
         }
         
-        CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
-        [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
-        [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
+//        CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
+//        [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
+//        [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
+        [self.alphaBlend setValue:maskImage forKey:kAlphaBlendInputImageAKey];
+        [self.alphaBlend setValue:self.inputImage forKey:kAlphaBlendInputImageBKey];
         
-        self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
+        self.compositeImage = [self.alphaBlend valueForKey:@"outputImage"];
         self.reComposite = false;
     }
     
