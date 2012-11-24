@@ -53,7 +53,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
         self.maskToAlpha = nil;
         _opacity = 0.25;
         _maskColor = [NSColor redColor];
-        _isMask = YES;
+        _isMask = NO;
         self.newInput = true;
         self.refilterInput = true;
         self.reComposite = true;
@@ -132,7 +132,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
       
         if (self.isMask) {
             [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
-            [self.maskToAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kMaskToAlphaScale];
+            [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaScale];
             [self.maskToAlpha setValue:self.maskColor forKey:kMaskToAlphaMapColor];
             maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
         }
@@ -140,8 +140,13 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
             maskImage = self.outputImage;
         }
         
+        CIFilter *scaleAlphaFilter = [CIFilter filterWithName:kScaleAlphaName];
+        [scaleAlphaFilter setValue:maskImage forKey:kCIInputImageKey];
+        [scaleAlphaFilter setValue:[NSNumber numberWithFloat:self.opacity] forKey:kScaleAlphaOpacityKey];
+        CIImage * scaledMaskImage = [scaleAlphaFilter valueForKey:kCIOutputImageKey];
+        
         CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
-        [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
+        [sourceOverFilter setValue:scaledMaskImage forKey:kCIInputImageKey];
         [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
         self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
 //        [self.ScaleAlpha setValue:self.inputImage forKey:kScaleAlphaInputImageBKey];

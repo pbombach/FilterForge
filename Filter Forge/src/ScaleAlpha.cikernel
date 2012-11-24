@@ -2,7 +2,7 @@
 
 */
 
-
+/*
 kernel vec4 scaleAlpha(sampler src,sampler dst,float opacity)
 {
     vec4 srcClr = unpremultiply(sample(src, samplerCoord(src)));
@@ -22,5 +22,14 @@ kernel vec4 scaleAlpha(sampler src,sampler dst,float opacity)
 //    vec4 out = srcClr;
 
     return premultiply(outClr);
+
+}
+*/
+
+kernel vec4 scaleAlpha(sampler inputImage, float opacity)
+{
+    vec4 inputImageClr = unpremultiply(sample(inputImage, samplerCoord(inputImage)));
+    inputImageClr.a *= opacity;
+    return premultiply(inputImageClr);
 
 }

@@ -9,15 +9,14 @@
 #import <Quartz/Quartz.h>
 
 extern NSString * const kScaleAlphaOpacityKey;
-extern NSString * const kScaleAlphaInputImageAKey;
-extern NSString * const kScaleAlphaInputImageBKey;
+//extern NSString * const kScaleAlphaInputImageAKey;
+//extern NSString * const kScaleAlphaInputImageBKey;
 extern NSString * const kScaleAlphaName;
 
 
 @interface ScaleAlpha : CIFilter
 {
-    CIImage *inputImageA;
-    CIImage *inputImageB;
+    CIImage *inputImage;
     NSNumber  *opacity;
     CIImage   *outputImage;
 
