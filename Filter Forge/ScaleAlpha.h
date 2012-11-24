@@ -1,5 +1,5 @@
 //
-//  AlphaBlend.h
+//  ScaleAlpha.h
 //  Filter Forge
 //
 //  Created by Paul Bombach on 10/27/12.
@@ -8,13 +8,13 @@
 
 #import <Quartz/Quartz.h>
 
-extern NSString * const kAlphaBlendOpacityKey;
-extern NSString * const kAlphaBlendInputImageAKey;
-extern NSString * const kAlphaBlendInputImageBKey;
-extern NSString * const kAlphaBlendName;
+extern NSString * const kScaleAlphaOpacityKey;
+extern NSString * const kScaleAlphaInputImageAKey;
+extern NSString * const kScaleAlphaInputImageBKey;
+extern NSString * const kScaleAlphaName;
 
 
-@interface AlphaBlend : CIFilter
+@interface ScaleAlpha : CIFilter
 {
     CIImage *inputImageA;
     CIImage *inputImageB;

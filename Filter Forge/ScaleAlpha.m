@@ -1,23 +1,23 @@
 //
-//  AlphaBlend.m
+//  ScaleAlpha.m
 //  Filter Forge
 //
 //  Created by Paul Bombach on 10/27/12.
 //  Copyright (c) 2012 Blue Eagle Software. All rights reserved.
 //
 
-#import "AlphaBlend.h"
+#import "ScaleAlpha.h"
 
 
-static CIKernel *alphaBlendKernel = nil;
+static CIKernel *ScaleAlphaKernel = nil;
 
-NSString * const kAlphaBlendOpacityKey = @"opacity";
-NSString * const kAlphaBlendInputImageAKey = @"inputImageA";
-NSString * const kAlphaBlendInputImageBKey = @"inputImageB";
-NSString * const kAlphaBlendName = @"AlphaBlend";
+NSString * const kScaleAlphaOpacityKey = @"opacity";
+NSString * const kScaleAlphaInputImageAKey = @"inputImageA";
+NSString * const kScaleAlphaInputImageBKey = @"inputImageB";
+NSString * const kScaleAlphaName = @"ScaleAlpha";
 
 
-@implementation AlphaBlend
+@implementation ScaleAlpha
 
 
 + (CIFilter *)filterWithName: (NSString *)name
@@ -29,10 +29,10 @@ NSString * const kAlphaBlendName = @"AlphaBlend";
 
 + (void)initialize
 {
-    [CIFilter registerFilterName:kAlphaBlendName
+    [CIFilter registerFilterName:kScaleAlphaName
                      constructor: (id<CIFilterConstructor>) self
                  classAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"AlphaBlend", kCIAttributeFilterDisplayName,
+                                   @"ScaleAlpha", kCIAttributeFilterDisplayName,
                                    [NSArray arrayWithObjects:
                                     kCICategoryColorAdjustment, kCICategoryVideo,
                                     kCICategoryStillImage,kCICategoryInterlaced,
@@ -43,12 +43,12 @@ NSString * const kAlphaBlendName = @"AlphaBlend";
 
 - (id)init
 {
-    if(alphaBlendKernel == nil)// 1
+    if(ScaleAlphaKernel == nil)// 1
     {
         NSBundle    *bundle = [NSBundle bundleForClass: [self class]];
-        NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"AlphaBlend" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
+        NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"ScaleAlpha" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
         NSArray     *kernels = [CIKernel kernelsWithString: code2];
-        alphaBlendKernel = [kernels objectAtIndex:0] ;
+        ScaleAlphaKernel = [kernels objectAtIndex:0] ;
     }
     return [super init];
 }
@@ -70,7 +70,7 @@ NSString * const kAlphaBlendName = @"AlphaBlend";
         kCIAttributeType      : kCIAttributeTypeScalar
     };
     
-    return @{kAlphaBlendOpacityKey:opacityAttrib};
+    return @{kScaleAlphaOpacityKey:opacityAttrib};
 
 }
 
@@ -80,7 +80,7 @@ NSString * const kAlphaBlendName = @"AlphaBlend";
     CISampler *srcA = [CISampler samplerWithImage: inputImageA];
     CISampler *srcB =[CISampler samplerWithImage: inputImageB];
 
-    CIImage *outImage = [self apply:alphaBlendKernel,srcA,srcB,opacity,kCIApplyOptionDefinition, [srcA definition],nil] ;
+    CIImage *outImage = [self apply:ScaleAlphaKernel,srcA,srcB,opacity,kCIApplyOptionDefinition, [srcA definition],nil] ;
 
     return outImage;
 }

@@ -10,7 +10,7 @@
 #import <Quartz/Quartz.h>
 #import "FilterChain.h"
 #import "MaskToAlpha.h"
-#import "AlphaBlend.h"
+#import "ScaleAlpha.h"
 
 /*
  #pragma mark - Synthesized Properties
@@ -32,7 +32,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 @interface FilterChain()
 
 @property (strong) CIFilter *maskToAlpha;
-@property (strong) CIFilter *alphaBlend;
+@property (strong) CIFilter *ScaleAlpha;
 @property (strong) CIFilter *userSelectedFilter;
 @property (nonatomic, strong) NSURL *fileURL;
 
@@ -94,10 +94,10 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
         [self.maskToAlpha setDefaults];
     }
     
-    if (self.alphaBlend == nil) {
-        [AlphaBlend class];
-        self.alphaBlend = [CIFilter filterWithName:kAlphaBlendName];
-        [self.alphaBlend setDefaults];
+    if (self.ScaleAlpha == nil) {
+        [ScaleAlpha class];
+        self.ScaleAlpha = [CIFilter filterWithName:kScaleAlphaName];
+        [self.ScaleAlpha setDefaults];
     }
     
     if (self.newInput) {
@@ -132,7 +132,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
       
         if (self.isMask) {
             [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
-            [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaScale];
+            [self.maskToAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kMaskToAlphaScale];
             [self.maskToAlpha setValue:self.maskColor forKey:kMaskToAlphaMapColor];
             maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
         }
@@ -140,14 +140,16 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
             maskImage = self.outputImage;
         }
         
-//        CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
-//        [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
-//        [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
-        [self.alphaBlend setValue:maskImage forKey:kAlphaBlendInputImageAKey];
-        [self.alphaBlend setValue:self.inputImage forKey:kAlphaBlendInputImageBKey];
-        [self.alphaBlend setValue:[NSNumber numberWithFloat:self.opacity] forKey:kAlphaBlendOpacityKey];
+        CIFilter *sourceOverFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
+        [sourceOverFilter setValue:maskImage forKey:kCIInputImageKey];
+        [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
+        self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
+//        [self.ScaleAlpha setValue:self.inputImage forKey:kScaleAlphaInputImageBKey];
+//        [self.ScaleAlpha setValue:maskImage  forKey:kScaleAlphaInputImageAKey];
+//        [self.ScaleAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kScaleAlphaOpacityKey];
+//        self.compositeImage = [self.ScaleAlpha valueForKey:@"outputImage"];
         
-        self.compositeImage = [self.alphaBlend valueForKey:@"outputImage"];
+
         self.reComposite = false;
     }
     

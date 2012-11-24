@@ -26,9 +26,9 @@
 		8AAAA89316514F5D0073BF2C /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AAAA89216514F5D0073BF2C /* SettingsView.xib */; };
 		8AAD493616135B2300E92BDA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAD493516135B2300E92BDA /* Quartz.framework */; };
 		8AF34C30161150FF00EBB017 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF34C2F161150FF00EBB017 /* QuartzCore.framework */; };
-		8AF59D56165BEAB9006AD92D /* AlphaBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF59D55165BEAB9006AD92D /* AlphaBlend.m */; };
-		8AF59D57165D196D006AD92D /* AlphaBlend.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF59D55165BEAB9006AD92D /* AlphaBlend.m */; };
-		8AF59D59165D2580006AD92D /* AlphaBlend.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 8AF59D58165D2580006AD92D /* AlphaBlend.cikernel */; };
+		8AF59D56165BEAB9006AD92D /* ScaleAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF59D55165BEAB9006AD92D /* ScaleAlpha.m */; };
+		8AF59D57165D196D006AD92D /* ScaleAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF59D55165BEAB9006AD92D /* ScaleAlpha.m */; };
+		8AF59D59165D2580006AD92D /* ScaleAlpha.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 8AF59D58165D2580006AD92D /* ScaleAlpha.cikernel */; };
 		8AF6FB8C163CD1B800BB6390 /* MaskToAlpha.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 8AF6FB8B163CD1B800BB6390 /* MaskToAlpha.cikernel */; };
 		8AF6FB90163CD2F800BB6390 /* MaskToAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF6FB8F163CD2F800BB6390 /* MaskToAlpha.m */; };
 /* End PBXBuildFile section */
@@ -77,9 +77,9 @@
 		8AAD493216135AF600E92BDA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8AAD493516135B2300E92BDA /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		8AF34C2F161150FF00EBB017 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		8AF59D54165BEAB9006AD92D /* AlphaBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaBlend.h; sourceTree = "<group>"; };
-		8AF59D55165BEAB9006AD92D /* AlphaBlend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlphaBlend.m; sourceTree = "<group>"; };
-		8AF59D58165D2580006AD92D /* AlphaBlend.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AlphaBlend.cikernel; path = src/AlphaBlend.cikernel; sourceTree = "<group>"; };
+		8AF59D54165BEAB9006AD92D /* ScaleAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScaleAlpha.h; sourceTree = "<group>"; };
+		8AF59D55165BEAB9006AD92D /* ScaleAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScaleAlpha.m; sourceTree = "<group>"; };
+		8AF59D58165D2580006AD92D /* ScaleAlpha.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ScaleAlpha.cikernel; path = src/ScaleAlpha.cikernel; sourceTree = "<group>"; };
 		8AF6FB8B163CD1B800BB6390 /* MaskToAlpha.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MaskToAlpha.cikernel; path = src/MaskToAlpha.cikernel; sourceTree = "<group>"; };
 		8AF6FB8E163CD2F800BB6390 /* MaskToAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaskToAlpha.h; sourceTree = "<group>"; };
 		8AF6FB8F163CD2F800BB6390 /* MaskToAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaskToAlpha.m; sourceTree = "<group>"; };
@@ -198,8 +198,8 @@
 		8A648A39160FD10A0099EBFA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8AF59D54165BEAB9006AD92D /* AlphaBlend.h */,
-				8AF59D55165BEAB9006AD92D /* AlphaBlend.m */,
+				8AF59D54165BEAB9006AD92D /* ScaleAlpha.h */,
+				8AF59D55165BEAB9006AD92D /* ScaleAlpha.m */,
 				8A648A2F160FB8CC0099EBFA /* FilterChain.h */,
 				8A648A30160FB8CC0099EBFA /* FilterChain.m */,
 				8AF6FB8E163CD2F800BB6390 /* MaskToAlpha.h */,
@@ -243,7 +243,7 @@
 		8AF6FB91163CD4B800BB6390 /* Kernels */ = {
 			isa = PBXGroup;
 			children = (
-				8AF59D58165D2580006AD92D /* AlphaBlend.cikernel */,
+				8AF59D58165D2580006AD92D /* ScaleAlpha.cikernel */,
 				8AF6FB8B163CD1B800BB6390 /* MaskToAlpha.cikernel */,
 			);
 			name = Kernels;
@@ -328,7 +328,7 @@
 				8A355E05162C483A00E93C03 /* Vision.txt in Resources */,
 				8AF6FB8C163CD1B800BB6390 /* MaskToAlpha.cikernel in Resources */,
 				8AAAA89316514F5D0073BF2C /* SettingsView.xib in Resources */,
-				8AF59D59165D2580006AD92D /* AlphaBlend.cikernel in Resources */,
+				8AF59D59165D2580006AD92D /* ScaleAlpha.cikernel in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AF59D57165D196D006AD92D /* AlphaBlend.m in Sources */,
+				8AF59D57165D196D006AD92D /* ScaleAlpha.m in Sources */,
 				8A648A08160FB6C00099EBFA /* main.m in Sources */,
 				8A648A0F160FB6C00099EBFA /* AppDelegate.m in Sources */,
 				8A648A31160FB8CC0099EBFA /* FilterChain.m in Sources */,
@@ -379,7 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A648A26160FB6C00099EBFA /* Filter_ForgeTests.m in Sources */,
-				8AF59D56165BEAB9006AD92D /* AlphaBlend.m in Sources */,
+				8AF59D56165BEAB9006AD92D /* ScaleAlpha.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
