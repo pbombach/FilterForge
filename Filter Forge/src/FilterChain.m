@@ -9,7 +9,7 @@
 
 #import <Quartz/Quartz.h>
 #import "FilterChain.h"
-#import "MaskToAlpha.h"
+#import "ThresholdAndMap.h"
 #import "ScaleAlpha.h"
 
 /*
@@ -31,7 +31,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 // Local ivars
 @interface FilterChain()
 
-@property (strong) CIFilter *maskToAlpha;
+@property (strong) CIFilter *ThresholdAndMap;
 @property (strong) CIFilter *ScaleAlpha;
 
 @property (nonatomic, strong) NSURL *fileURL;
@@ -51,7 +51,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
       //  self.userSelectedFilter = [CIFilter filterWithName:@"CIColorControls"];
         [self.userSelectedFilter setDefaults];
-        self.maskToAlpha = nil;
+        self.ThresholdAndMap = nil;
         _opacity = 0.25;
         _maskColor = [NSColor redColor];
         _isMask = YES;
@@ -85,11 +85,11 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 // Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
 
-    if (self.maskToAlpha == nil) {
+    if (self.ThresholdAndMap == nil) {
 
-        [MaskToAlpha class];
-        self.maskToAlpha = [CIFilter filterWithName:kMaskToAlphaName];
-        [self.maskToAlpha setDefaults];
+        [ThresholdAndMap class];
+        self.ThresholdAndMap = [CIFilter filterWithName:kThresholdAndMapName];
+        [self.ThresholdAndMap setDefaults];
     }
     
     if (self.ScaleAlpha == nil) {
@@ -127,10 +127,10 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 
       
         if (self.isMask) {
-            [self.maskToAlpha setValue:_outputImage forKey:kCIInputImageKey];
-            [self.maskToAlpha setValue:[NSNumber numberWithFloat:1.0] forKey:kMaskToAlphaScale];
-            [self.maskToAlpha setValue:self.maskColor forKey:kMaskToAlphaMapColor];
-            maskImage = [self.maskToAlpha valueForKey:kCIOutputImageKey];
+            [self.ThresholdAndMap setValue:_outputImage forKey:kCIInputImageKey];
+            [self.ThresholdAndMap setValue:[NSNumber numberWithFloat:1.0] forKey:kThresholdAndMapScale];
+            [self.ThresholdAndMap setValue:self.maskColor forKey:kThresholdAndMapMapColor];
+            maskImage = [self.ThresholdAndMap valueForKey:kCIOutputImageKey];
         }
         else {
             maskImage = self.outputImage;

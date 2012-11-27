@@ -1,22 +1,22 @@
 //
-//  MaskToAlpha.m
+//  ThresholdAndMap.m
 //  Filter Forge
 //
 //  Created by Paul Bombach on 10/27/12.
 //  Copyright (c) 2012 Blue Eagle Software. All rights reserved.
 //
 
-#import "MaskToAlpha.h"
+#import "ThresholdAndMap.h"
 
 
-static CIKernel *maskToAlpha = nil;
+static CIKernel *thresholdAndMap = nil;
 
-NSString * const kMaskToAlphaScale = @"alphaScale";
-NSString * const kMaskToAlphaMapColor = @"mapColor";
-NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
+NSString * const kThresholdAndMapScale = @"alphaScale";
+NSString * const kThresholdAndMapMapColor = @"mapColor";
+NSString * const kThresholdAndMapName = @"ThresholdAndMap";
 
 
-@implementation MaskToAlpha
+@implementation ThresholdAndMap
 
 
 + (CIFilter *)filterWithName: (NSString *)name
@@ -28,10 +28,10 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 + (void)initialize
 {
-    [CIFilter registerFilterName:kMaskToAlphaName
+    [CIFilter registerFilterName:kThresholdAndMapName
                      constructor: (id<CIFilterConstructor>) self
                  classAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"Mask To Alpha", kCIAttributeFilterDisplayName,
+                                   @"ThresholdAndMap", kCIAttributeFilterDisplayName,
                                    [NSArray arrayWithObjects:
                                     kCICategoryColorAdjustment, kCICategoryVideo,
                                     kCICategoryStillImage,kCICategoryInterlaced,
@@ -42,12 +42,12 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
 - (id)init
 {
-    if(maskToAlpha == nil)// 1
+    if(thresholdAndMap == nil)// 1
     {
         NSBundle    *bundle = [NSBundle bundleForClass: [self class]];
-        NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"MaskToAlpha" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
+        NSString    *code2 = [NSString stringWithContentsOfFile:[bundle pathForResource:@"ThresholdAndMap" ofType:@"cikernel"] encoding:NSASCIIStringEncoding error:NULL];
         NSArray     *kernels = [CIKernel kernelsWithString: code2];
-        maskToAlpha = [kernels objectAtIndex:0] ;
+        thresholdAndMap = [kernels objectAtIndex:0] ;
     }
     return [super init];
 }
@@ -77,7 +77,7 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
                                           alpha:1.0]
     };
     
-    return @{kMaskToAlphaMapColor:mapColorAttributes,kMaskToAlphaScale:alphaScaleAttributes};
+    return @{kThresholdAndMapMapColor:mapColorAttributes,kThresholdAndMapScale:alphaScaleAttributes};
 
 }
 
@@ -86,7 +86,7 @@ NSString * const kMaskToAlphaName = @"PmbMaskToAlpha";
 
     CISampler *src = [CISampler samplerWithImage: inputImage];
 
-    CIImage *outImage = [self apply:maskToAlpha,src,alphaScale,self->mapColor,kCIApplyOptionDefinition, [src definition],nil] ;
+    CIImage *outImage = [self apply:thresholdAndMap,src,self->mapColor,kCIApplyOptionDefinition, [src definition],nil] ;
 
     return outImage;
 }

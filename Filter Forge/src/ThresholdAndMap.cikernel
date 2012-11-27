@@ -1,0 +1,20 @@
+/*
+
+*/
+
+const float threshold = 0.1;
+
+kernel vec4 ThresholdAndMapKernel(sampler image,__color mapColor)
+{
+    vec4 inColor = unpremultiply(sample(image, samplerCoord(image)));
+    float meanValue = (inColor.r+inColor.b+inColor.g)/3.0;
+    float alpha = meanValue < threshold ? 0.0 : 1.0;
+
+    vec4 outColor;
+
+    outColor = mapColor;
+    outColor.a = alpha;
+
+
+    return premultiply(outColor);
+}
