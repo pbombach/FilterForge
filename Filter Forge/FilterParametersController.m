@@ -33,7 +33,6 @@
 
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    NSSize size=NSSizeFromCGSize(CGSizeZero);
     NSDictionary *uiConfiguration = @{IKUISizeFlavor:IKUISizeRegular,kCIUIParameterSet:kCIUISetDevelopment};
 
     NSArray *excludedKeys = @[kCIInputImageKey];
@@ -54,23 +53,8 @@
     windowRect.size.width += 30.;
     windowRect.size.height += 20;
 
-   
-//    NSRect windowFrame = self.contentView.window.frame;
-//    NSRect contentBounds = filterView.bounds;
-//    contentBounds.size.width = self.contentView.bounds.size.width;
-//    [filterView setAutoresizingMask:NSViewMinYMargin];
-//    windowFrame.size.height += filterView.bounds.size.height;
-//    windowFrame.origin.y = 100.;
-//    [self.window setFrame:windowFrame display:YES animate:YES];
-    
-
     self.window.contentView = filterView;
     [self.window setFrame:windowRect display:YES];
-//    [self.contentView addSubview:filterView];
-//    [self.window.contentView invalidateIntrinsicContentSize];
-//    [self.contentView setBackgroundColor:[NSColor blueColor]];
-//    [self.contentView setNeedsLayout:YES];
-
 
 }
 

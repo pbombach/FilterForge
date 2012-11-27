@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Filter Forge/FilterParametersController.m"
-         timestampString = "375640703.39044"
+         timestampString = "375674144.626879"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "47"
+         endingLineNumber = "47"
          landmarkName = "-windowDidLoad"
          landmarkType = "5">
       </FileBreakpoint>

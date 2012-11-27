@@ -85,9 +85,6 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 // Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
 
-    BOOL inputImageChanged = NO;
-    BOOL outputImageChanged = NO;
-    
     if (self.maskToAlpha == nil) {
 
         [MaskToAlpha class];
@@ -116,14 +113,12 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
         
         self.inputImage = [filter valueForKey:kCIOutputImageKey]; // 4
         self.newInput = false;
-        inputImageChanged = YES;
     }
     
     if (self.refilterInput) {
         [self.userSelectedFilter setValue:_inputImage forKey:kCIInputImageKey];
         self.outputImage = [self.userSelectedFilter valueForKey:kCIOutputImageKey];
         self.refilterInput = false;
-        outputImageChanged = YES;
     }
     
     if (self.reComposite) {
