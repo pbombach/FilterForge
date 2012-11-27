@@ -1,5 +1,6 @@
 /*
-
+ * The purpose of this kernel is to threshold an input image clipping any values below the threshold
+ * to an alpha of zero. It also remaps the color of each pixel to a user selected map color.
 */
 
 const float threshold = 0.1;
