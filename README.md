@@ -8,4 +8,4 @@ This app will allow a user to apply a filter to an input image and see how the f
 
 I welcome any comments and suggestions. In addition, please feel to use it if you find it useful. Due to the frequency of my 
 checkpoint commits, an elephant balanced on a needle would seem extraordinarily stable in comparison. This is a work very much
-in progress. Bear this in mind. Caveat Emptor.
+in progress. Bear this in mind. Use at your own risk.
