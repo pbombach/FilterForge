@@ -26,7 +26,8 @@ extern NSString * const kCompositeImageChangedKey;
 @property (assign,nonatomic) float opacity;
 @property (strong) NSColor * maskColor;
 @property (assign,nonatomic) BOOL isMask;
-           
+@property (strong) CIFilter *userSelectedFilter;
+
 - (void) setFileURL:(NSURL *) fileURL;
 
 @end

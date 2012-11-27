@@ -33,7 +33,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 
 @property (strong) CIFilter *maskToAlpha;
 @property (strong) CIFilter *ScaleAlpha;
-@property (strong) CIFilter *userSelectedFilter;
+
 @property (nonatomic, strong) NSURL *fileURL;
 
 @property (assign) bool newInput;
@@ -49,11 +49,12 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     self = [super init];
     if (self) {
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
+      //  self.userSelectedFilter = [CIFilter filterWithName:@"CIColorControls"];
         [self.userSelectedFilter setDefaults];
         self.maskToAlpha = nil;
         _opacity = 0.25;
         _maskColor = [NSColor redColor];
-        _isMask = NO;
+        _isMask = YES;
         self.newInput = true;
         self.refilterInput = true;
         self.reComposite = true;
@@ -149,11 +150,6 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
         [sourceOverFilter setValue:scaledMaskImage forKey:kCIInputImageKey];
         [sourceOverFilter setValue:self.inputImage forKey:kCIInputBackgroundImageKey];
         self.compositeImage = [sourceOverFilter valueForKey:@"outputImage"];
-//        [self.ScaleAlpha setValue:self.inputImage forKey:kScaleAlphaInputImageBKey];
-//        [self.ScaleAlpha setValue:maskImage  forKey:kScaleAlphaInputImageAKey];
-//        [self.ScaleAlpha setValue:[NSNumber numberWithFloat:self.opacity] forKey:kScaleAlphaOpacityKey];
-//        self.compositeImage = [self.ScaleAlpha valueForKey:@"outputImage"];
-        
 
         self.reComposite = false;
     }

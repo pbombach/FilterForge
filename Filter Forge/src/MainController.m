@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MainView.h"
 #import "SettingsController.h"
+#import "FilterParametersController.h"
 
 static int const kDisplayInputImage           = 0;
 static int const kDisplayOutputImage          = 1;
@@ -25,7 +26,9 @@ static int const kZoomFit = 2;
 @property (assign) int mDisplayedImage;
 
 @property (strong) SettingsController *settingsController;
+@property (strong) FilterParametersController *filterParametersController;
 @property (strong) FilterChain *chain;
+
 @end
 
 @implementation MainController
@@ -70,7 +73,9 @@ static int const kZoomFit = 2;
 }
 
 - (IBAction)edgeButtonClicked:(id)sender {
-    
+    self.filterParametersController = [[FilterParametersController alloc] init];
+    self.filterParametersController.filter = self.chain.userSelectedFilter;
+    [self.filterParametersController showWindow:self];
 }
 
 - (IBAction)outputButtonClicked:(id)sender {

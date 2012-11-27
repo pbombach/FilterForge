@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A043FED1662683F00A44DC1 /* FilterParametersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A043FEC1662683F00A44DC1 /* FilterParametersController.m */; };
+		8A043FF016626B3800A44DC1 /* FilterParametersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A043FEF16626B3800A44DC1 /* FilterParametersView.xib */; };
 		8A355E05162C483A00E93C03 /* Vision.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8A355E04162C483A00E93C03 /* Vision.txt */; };
 		8A6489FC160FB6C00099EBFA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6489FB160FB6C00099EBFA /* Cocoa.framework */; };
 		8A648A06160FB6C00099EBFA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A648A04160FB6C00099EBFA /* InfoPlist.strings */; };
@@ -44,6 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8A043FEB1662683F00A44DC1 /* FilterParametersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterParametersController.h; sourceTree = "<group>"; };
+		8A043FEC1662683F00A44DC1 /* FilterParametersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterParametersController.m; sourceTree = "<group>"; };
+		8A043FEF16626B3800A44DC1 /* FilterParametersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterParametersView.xib; sourceTree = "<group>"; };
 		8A355E04162C483A00E93C03 /* Vision.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vision.txt; sourceTree = "<group>"; };
 		8A6489F7160FB6C00099EBFA /* Filter Forge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Filter Forge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A6489FB160FB6C00099EBFA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -217,6 +222,8 @@
 				8A648A37160FCE7B0099EBFA /* MainController.m */,
 				8AAAA88F16514BD00073BF2C /* SettingsController.h */,
 				8AAAA89016514BD00073BF2C /* SettingsController.m */,
+				8A043FEB1662683F00A44DC1 /* FilterParametersController.h */,
+				8A043FEC1662683F00A44DC1 /* FilterParametersController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -236,6 +243,7 @@
 				8A7DA762161C82CE005AAA4B /* MainView.h */,
 				8A7DA763161C82CE005AAA4B /* MainView.m */,
 				8AAAA89216514F5D0073BF2C /* SettingsView.xib */,
+				8A043FEF16626B3800A44DC1 /* FilterParametersView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -329,6 +337,7 @@
 				8AF6FB8C163CD1B800BB6390 /* MaskToAlpha.cikernel in Resources */,
 				8AAAA89316514F5D0073BF2C /* SettingsView.xib in Resources */,
 				8AF59D59165D2580006AD92D /* ScaleAlpha.cikernel in Resources */,
+				8A043FF016626B3800A44DC1 /* FilterParametersView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +380,7 @@
 				8A7DA764161C82CE005AAA4B /* MainView.m in Sources */,
 				8AF6FB90163CD2F800BB6390 /* MaskToAlpha.m in Sources */,
 				8AAAA89116514BD00073BF2C /* SettingsController.m in Sources */,
+				8A043FED1662683F00A44DC1 /* FilterParametersController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
