@@ -40,9 +40,9 @@
     IKFilterUIView *filterView = [self.filter viewForUIConfiguration:uiConfiguration excludedKeys:excludedKeys];
     [filterView setAutoresizingMask:NSViewMaxXMargin|NSViewMinXMargin|NSViewWidthSizable];
     [filterView setAutoresizesSubviews:NO];
-    NSString *h = [filterView performSelector:@selector(_subtreeDescription)];
-    NSLog(@"%@",h);
-
+    NSObjectController *objectController = filterView.objectController;
+    [objectController addObserver:self forKeyPath:@"content" options:(NSKeyValueObservingOptionNew |
+                                                                      NSKeyValueObservingOptionOld) context:NULL];
 
     NSRect filterViewRect = filterView.frame;
   
@@ -56,6 +56,13 @@
     self.window.contentView = filterView;
     [self.window setFrame:windowRect display:YES];
 
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    NSLog(@"Hi");
 }
 
 
