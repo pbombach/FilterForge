@@ -31,7 +31,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 // Local ivars
 @interface FilterChain()
 
-@property (strong) CIFilter *ThresholdAndMap;
+@property (strong) CIFilter *thresholdAndMap;
 @property (strong) CIFilter *ScaleAlpha;
 
 @property (nonatomic, strong) NSURL *fileURL;
@@ -50,7 +50,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     if (self) {
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
         [self.userSelectedFilter setDefaults];
-        self.ThresholdAndMap = nil;
+        self.thresholdAndMap = nil;
         _opacity = 0.25;
         _maskColor = [NSColor redColor];
         _isMask = YES;
@@ -84,11 +84,11 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 // Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
 
-    if (self.ThresholdAndMap == nil) {
+    if (self.thresholdAndMap == nil) {
 
         [ThresholdAndMap class];
-        self.ThresholdAndMap = [CIFilter filterWithName:kThresholdAndMapName];
-        [self.ThresholdAndMap setDefaults];
+        self.thresholdAndMap = [CIFilter filterWithName:kThresholdAndMapName];
+        [self.thresholdAndMap setDefaults];
     }
     
     if (self.ScaleAlpha == nil) {
@@ -126,10 +126,10 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 
       
         if (self.isMask) {
-            [self.ThresholdAndMap setValue:_outputImage forKey:kCIInputImageKey];
-            [self.ThresholdAndMap setValue:[NSNumber numberWithFloat:1.0] forKey:kThresholdAndMapScale];
-            [self.ThresholdAndMap setValue:self.maskColor forKey:kThresholdAndMapMapColor];
-            maskImage = [self.ThresholdAndMap valueForKey:kCIOutputImageKey];
+            [self.thresholdAndMap setValue:_outputImage forKey:kCIInputImageKey];
+            [self.thresholdAndMap setValue:[NSNumber numberWithFloat:1.0] forKey:kThresholdAndMapScale];
+            [self.thresholdAndMap setValue:self.maskColor forKey:kThresholdAndMapMapColor];
+            maskImage = [self.thresholdAndMap valueForKey:kCIOutputImageKey];
         }
         else {
             maskImage = self.outputImage;

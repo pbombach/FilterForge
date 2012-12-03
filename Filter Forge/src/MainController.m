@@ -75,6 +75,7 @@ static int const kZoomFit = 2;
 - (IBAction)edgeButtonClicked:(id)sender {
     self.filterParametersController = [[FilterParametersController alloc] init];
     self.filterParametersController.filter = self.chain.userSelectedFilter;
+    self.filterParametersController.filter = self.chain.ThresholdAndMap;
     self.filterParametersController.parentController = self;
     [self.filterParametersController showWindow:self];
 }

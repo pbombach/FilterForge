@@ -19,6 +19,7 @@ extern NSString * const kCompositeImageChangedKey;
     NSColor *_maskColor;
 }
 
+
 @property (strong) CIImage *inputImage;
 @property (strong) CIImage *outputImage;
 @property (strong) CIImage *compositeImage;
