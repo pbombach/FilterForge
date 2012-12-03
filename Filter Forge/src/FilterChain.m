@@ -83,6 +83,11 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 
 // Handle any changes to the model that would require the chain to be recalculated
 -(void) process {
+    
+    // The user hasn't selected an image yet
+    if (self.fileURL == nil) {
+        return;
+    }
 
     if (self.thresholdAndMap == nil) {
 
