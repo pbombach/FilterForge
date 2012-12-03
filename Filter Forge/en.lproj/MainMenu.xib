@@ -1541,7 +1541,7 @@
 								<object class="NSButton" id="1063898245">
 									<reference key="NSNextResponder" ref="48262405"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{522, 20}, {109, 48}}</string>
+									<string key="NSFrame">{{518, 20}, {117, 48}}</string>
 									<reference key="NSSuperview" ref="48262405"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1034565995"/>
@@ -1550,7 +1550,7 @@
 									<object class="NSButtonCell" key="NSCell" id="101144011">
 										<int key="NSCellFlags">67108864</int>
 										<int key="NSCellFlags2">134217728</int>
-										<string key="NSContents">Filter Paramters</string>
+										<string key="NSContents">Filter Parameters</string>
 										<reference key="NSSupport" ref="644391043"/>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="1063898245"/>
@@ -3984,11 +3984,6 @@
 						<reference key="parent" ref="48262405"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">910</int>
-						<reference key="object" ref="626842051"/>
-						<reference key="parent" ref="48262405"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">751</int>
 						<reference key="object" ref="756378228"/>
 						<reference key="parent" ref="48262405"/>
@@ -3996,6 +3991,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">757</int>
 						<reference key="object" ref="1002233478"/>
+						<reference key="parent" ref="48262405"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">947</int>
+						<reference key="object" ref="626842051"/>
 						<reference key="parent" ref="48262405"/>
 					</object>
 				</array>
@@ -4247,14 +4247,14 @@
 				<string key="868.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="869.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="870.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="910.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="947.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">919</int>
+			<int key="maxID">947</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
