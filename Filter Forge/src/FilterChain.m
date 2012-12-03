@@ -49,7 +49,6 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     self = [super init];
     if (self) {
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
-//        self.userSelectedFilter = [CIFilter filterWithName:@"CIColorControls"];
         [self.userSelectedFilter setDefaults];
         self.ThresholdAndMap = nil;
         _opacity = 0.25;
