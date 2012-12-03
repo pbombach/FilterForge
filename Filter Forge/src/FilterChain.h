@@ -29,5 +29,6 @@ extern NSString * const kCompositeImageChangedKey;
 @property (strong) CIFilter *userSelectedFilter;
 
 - (void) setFileURL:(NSURL *) fileURL;
+- (void) setFilterChanged;
 
 @end

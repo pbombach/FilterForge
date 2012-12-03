@@ -49,7 +49,7 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
     self = [super init];
     if (self) {
         self.userSelectedFilter = [CIFilter filterWithName:@"CIEdges"];
-      //  self.userSelectedFilter = [CIFilter filterWithName:@"CIColorControls"];
+//        self.userSelectedFilter = [CIFilter filterWithName:@"CIColorControls"];
         [self.userSelectedFilter setDefaults];
         self.ThresholdAndMap = nil;
         _opacity = 0.25;
@@ -171,6 +171,12 @@ NSString * const kCompositeImageChangedKey = @"InputImageChangedKey";;
 - (void) setIsMask:(BOOL)isMask {
     _isMask = isMask;
     self.reComposite = true;
+    [self process];
+}
+
+- (void) setFilterChanged {
+    self.refilterInput = YES;
+    self.reComposite = YES;
     [self process];
 }
 

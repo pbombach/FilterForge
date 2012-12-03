@@ -38,11 +38,21 @@
     NSArray *excludedKeys = @[kCIInputImageKey];
 
     IKFilterUIView *filterView = [self.filter viewForUIConfiguration:uiConfiguration excludedKeys:excludedKeys];
+    
     [filterView setAutoresizingMask:NSViewMaxXMargin|NSViewMinXMargin|NSViewWidthSizable];
     [filterView setAutoresizesSubviews:NO];
-    NSObjectController *objectController = filterView.objectController;
-    [objectController addObserver:self forKeyPath:@"content" options:(NSKeyValueObservingOptionNew |
-                                                                      NSKeyValueObservingOptionOld) context:NULL];
+    self.objectController = filterView.objectController;
+    
+    for (NSString *key in self.filter.inputKeys) {
+        
+        // Input image is explicitly excluded from the UI so skip it.
+        if([key isEqualToString:kCIInputImageKey] ) {
+            continue;
+        }
+        NSString * keyPath = [@"content." stringByAppendingString:key];
+        [self.objectController addObserver:self.parentController forKeyPath:keyPath options:0 context:NULL];
+
+    }
 
     NSRect filterViewRect = filterView.frame;
   
@@ -54,16 +64,12 @@
     windowRect.size.height += 20;
 
     self.window.contentView = filterView;
+
+    self.window.title = [[self.filter.attributes objectForKey:kCIAttributeFilterDisplayName] stringByAppendingString:@" parameters"];
     [self.window setFrame:windowRect display:YES];
 
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-    NSLog(@"Hi");
-}
 
 
 

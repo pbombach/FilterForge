@@ -12,5 +12,7 @@
 
 @property (strong) CIFilter *filter;
 @property (weak) IBOutlet NSView *contentView;
+@property (strong) NSObjectController *objectController;
+@property (weak) id parentController;
 
 @end

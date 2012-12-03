@@ -75,6 +75,7 @@ static int const kZoomFit = 2;
 - (IBAction)edgeButtonClicked:(id)sender {
     self.filterParametersController = [[FilterParametersController alloc] init];
     self.filterParametersController.filter = self.chain.userSelectedFilter;
+    self.filterParametersController.parentController = self;
     [self.filterParametersController showWindow:self];
 }
 
@@ -156,5 +157,14 @@ static int const kZoomFit = 2;
 - (void) setMaskColor:(NSColor *)maskColor {
     self.chain.maskColor = maskColor;
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    [self.chain setFilterChanged];
+    
+}
+
 
 @end
