@@ -51,14 +51,18 @@
 }
 
 - (IBAction)filterCheckBoxToggled:(id)sender {
+    BOOL isMask = NO;
     if ( [((NSObject *)sender) isKindOfClass:[NSButton class]] ) {
         NSInteger state = [(NSButton *)sender state];
-        [self setColorUIIsEnabled:(state == NSOnState)];
+        isMask = state == NSOnState;
+        [self setColorUIIsEnabled:isMask];
+        
     }
     else {
         NSLog(@"%s:%d Expected sender to be NSButton, but found %@",__FILE__,__LINE__,
               [[sender class] description]);
     }
+    self.filterChain.isMask = isMask;
 }
 
 - (IBAction)colorChanged:(id)sender {

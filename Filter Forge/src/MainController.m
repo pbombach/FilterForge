@@ -158,6 +158,10 @@ static int const kZoomFit = 2;
     self.chain.maskColor = maskColor;
 }
 
+- (void) setIsMask:(BOOL) isMask {
+    self.chain.isMask = isMask;
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
