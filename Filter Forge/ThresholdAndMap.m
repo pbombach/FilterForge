@@ -86,7 +86,10 @@ NSString * const kThresholdAndMapName = @"ThresholdAndMap";
 
     CISampler *src = [CISampler samplerWithImage: inputImage];
 
-    CIImage *outImage = [self apply:thresholdAndMap,src,self->mapColor,kCIApplyOptionDefinition, [src definition],nil] ;
+//    CIImage *outImage = [self apply:thresholdAndMap,src,self->mapColor,kCIApplyOptionDefinition, [src definition],nil] ;
+    CIColor *ciColor = [[CIColor alloc]initWithCGColor:self->mapColor.CGColor];
+    NSDictionary *optionsDictionary = @{kCIApplyOptionDefinition:[src definition]};
+    CIImage *outImage = [self apply:thresholdAndMap arguments:@[src,ciColor] options:optionsDictionary];
 
     return outImage;
 }

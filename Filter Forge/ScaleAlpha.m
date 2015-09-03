@@ -80,7 +80,9 @@ NSString * const kScaleAlphaName = @"ScaleAlpha";
     CISampler *srcA = [CISampler samplerWithImage: inputImage];
     //    CISampler *srcB =[CISampler samplerWithImage: inputImageB];
 
-    CIImage *outImage = [self apply:ScaleAlphaKernel,srcA,opacity,kCIApplyOptionDefinition, [srcA definition],nil] ;
+//    CIImage *outImage = [self apply:ScaleAlphaKernel,srcA,opacity,kCIApplyOptionDefinition, [srcA definition],nil] ;
+    NSDictionary *optionsDictionary = @{kCIApplyOptionDefinition:[srcA definition]};
+    CIImage *outImage = [self apply:ScaleAlphaKernel arguments:@[srcA,opacity] options:optionsDictionary];
 
     return outImage;
 }
